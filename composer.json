@@ -16,8 +16,8 @@
     "target-dir": "Ilis/Bundle/PaymentBundle",
     "minimum-stability": "stable",
     "require": {
-        "symfony/symfony" : "2.3.*",
-        "doctrine/orm": ">=2.2.3,<2.4-dev",
+        "symfony/symfony": "2.2.*",
+        "doctrine/orm": "~2.2,>=2.2.3",
         "doctrine/doctrine-bundle": "1.2.*",
         "zendframework/zend-soap": ">2.0.0"
     }
