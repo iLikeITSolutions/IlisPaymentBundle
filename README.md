@@ -34,3 +34,14 @@ PaymentBundle
   }
 ```
 
+### Update the db in your application
+
+``` bash
+  $ php app/console doctrine:schema:update
+```
+
+
+
+
+
+
