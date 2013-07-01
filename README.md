@@ -54,7 +54,7 @@ Since this is still not available, please follow the next steps to update the da
 
 ``` bash
   $ php app/console doctrine:schema:update
-  php app/console doctrine:fix:load \
+  $ php app/console doctrine:fix:load \
     --append \
     --fixtures vendor/ilis/payment-bundle/Ilis/Bundle/PaymentBundle/Provider/Redsys/DataFixtures/ORM
 
