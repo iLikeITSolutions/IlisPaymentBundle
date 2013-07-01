@@ -131,6 +131,7 @@ class Method
      */
     public function addMethodAttribute(\Ilis\Bundle\PaymentBundle\Entity\MethodAttribute $attribute)
     {
+        $attribute->setMethod($this);
         $this->attributes[] = $attribute;
     }
 
