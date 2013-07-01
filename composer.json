@@ -1,0 +1,24 @@
+{
+    "name": "ilis/payment-bundle",
+    "description": "ilikeITSolutions Payment Bundle",
+    "keywords": ["payment", "ilikeITSolutions"],
+    "type": "symfony-bundle",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Carlo D'Ambrosio",
+            "email": "carlo@ql4b.net"
+        }
+    ],
+    "autoload": {
+        "psr-0": { "Ilis\\Bundle\\PaymentBundle": "" }
+    },
+    "target-dir": "Ilis/Bundle/PaymentBundle",
+    "minimum-stability": "stable",
+    "require": {
+        "symfony/symfony" : "2.3.*",
+        "doctrine/orm": ">=2.2.3,<2.4-dev",
+        "doctrine/doctrine-bundle": "1.2.*",
+        "zendframework/zend-soap": ">2.0.0"
+    }
+}
