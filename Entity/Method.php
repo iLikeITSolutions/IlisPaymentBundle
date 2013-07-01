@@ -44,7 +44,7 @@ class Method
     private $code;
 
     /**
-     * @ORM\OneToMany(targetEntity="Ilis\Bundle\PaymentBundle\Entity\MethodAttribute", mappedBy="method", cascade={"persist"});
+     * @ORM\OneToMany(targetEntity="Ilis\Bundle\PaymentBundle\Entity\MethodAttribute", mappedBy="method", cascade={"persist}, orphanRemoval=true);
      */
     private $attributes;
 
