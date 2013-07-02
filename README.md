@@ -89,7 +89,7 @@ Here is an example on how configure the merchant attribute for your newly create
     )
 ```
 
-Where "<your-merchant-id>" is the value that the Bank will provide you together with the other attributes' values.
+Where "your-merchant-id" is the value that the Bank will provide you together with the other attributes' values.
 The others attributes can be configured in the same way, just change the attribute name an value accordingly.
 
 The possible values for environment are "testing", "integration", "production"
