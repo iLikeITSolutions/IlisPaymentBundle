@@ -7,7 +7,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Ilis\Bundle\PaymentBunde\Entity;
+namespace Ilis\Bundle\PaymentBundle\Entity;
 
 use Doctrine\ORM\EntityRepository;
 
