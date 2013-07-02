@@ -22,7 +22,7 @@ class CreditCard extends Transaction
 
     const TYPE_AUTH     = 'cc_auth';
     const TYPE_PREAUTH  = 'cc_preauth';
-    const TYPE_FULLFILL = 'cc_fullfill';
+    const TYPE_FULFILL  = 'cc_fulfill';
     const TYPE_VOID     = 'cc_void';
     const TYPE_CANCEL   = 'cc_cancel';
 

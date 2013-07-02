@@ -10,32 +10,32 @@
 namespace Ilis\Bundle\PaymentBundle\Processor\CreditCard;
 
 use Ilis\Bundle\PaymentBundle\Processor\ProcessorAbstract;
-use Ilis\Bundle\PaymentBundle\Entity\Payment;
+use Ilis\Bundle\PaymentBundle\Entity\Transaction\CreditCard as CreditCardTransaction;
 
 abstract class CreditCardAbstract extends ProcessorAbstract
 {
     /**
-     * @param Payment $payment
+     * @param \Ilis\Bundle\PaymentBundle\Entity\Transaction\CreditCard $transaction
      */
-    abstract public function capture(Payment $payment, $amount);
+    abstract public function capture(CreditCardTransaction $transaction);
 
     /**
-     * @param Payment $payment
+     * @param \Ilis\Bundle\PaymentBundle\Entity\Transaction\CreditCard $transaction
      */
-    abstract public function authorize(Payment $payment, $amount);
+    abstract public function authorize(CreditCardTransaction $transaction);
 
     /**
-     * @param Payment $payment
+     * @param \Ilis\Bundle\PaymentBundle\Entity\Transaction\CreditCard $transaction
      */
-    abstract public function void (Payment $payment);
+    abstract public function void (CreditCardTransaction $transaction);
 
     /**
-     * @param Payment $payment
+     * @param \Ilis\Bundle\PaymentBundle\Entity\Transaction\CreditCard $transaction
      */
-    abstract public function fullfill(Payment $payment);
+    abstract public function fulfill(CreditCardTransaction $transaction);
 
     /**
-     * @param Payment $payment
+     * @param \Ilis\Bundle\PaymentBundle\Entity\Transaction\CreditCard $transaction
      */
-    abstract public function cancel(Payment $payment);
+    abstract public function cancel(CreditCardTransaction $transaction);
 }

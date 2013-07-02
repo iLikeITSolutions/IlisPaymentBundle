@@ -46,6 +46,6 @@ class CreditCardType extends AbstractType
 
     public function getName()
     {
-        return 'transaction';
+        return 'ilis_payment_creditcard';
     }
 }

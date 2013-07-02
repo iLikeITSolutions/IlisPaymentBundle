@@ -10,7 +10,7 @@
 namespace Ilis\Bundle\PaymentBundle\Processor\CreditCard;
 
 use Ilis\Bundle\PaymentBundle\Entity\MethodConfig;
-use Ilis\Bundle\PaymentBundle\Entity\Payment;
+use Ilis\Bundle\PaymentBundle\Entity\Transaction\CreditCard as CrediCardTranscation;
 use Ilis\Bundle\PaymentBundle\Provider\Redsys\Webservice\Client;
 use Ilis\Bundle\PaymentBundle\Provider\Redsys\Webservice\Merchant;
 use Ilis\Bundle\PaymentBundle\Provider\Redsys\Webservice\Transaction;
@@ -48,30 +48,34 @@ class Redsys extends CreditCardAbstract
     }
 
     /**
-     * @param Payment $payment
+     * @param \Ilis\Bundle\PaymentBundle\Entity\Transaction\CreditCard $transaction
      */
-    public function capture(Payment $payment, $amount){
+    public function capture(CrediCardTranscation $transaction){
 
-        //FIXME: Use Entity\Transaction instead
-        $payment->setCompleted(false);
-
-        if (!is_numeric($amount) || $amount <= 0)
+        if (!is_numeric($transaction->getAmount()) || $transaction->getAmount() <= 0)
             throw new Exception("Invalid amount");
+
+        // TODO: Check if the transaction has set the proper payment method
 
         $request = new Request();
 
-        $request->setOrder($payment->getOrder());
+        $request->setOrder($transaction->getId());
 
-        $amount = (float) number_format ($amount, 2, '.','')*100;
+        $amount = (float) number_format (
+                $transaction->getAmount(),
+                2,
+                '.'
+                ,''
+        )*100;
 
         $request->setAmount($amount);
 
         $request->setMerchantCode($this->merchant->getCode());
         $request->setTerminal($this->merchant->getTerminal());
         $request->setCurrency($this->merchant->getCurrency());
-        $request->setPan($payment->getPan());
-        $request->setCvv2($payment->getCvv2());
-        $request->setExpiryDate($payment->getExpiryDate());
+        $request->setPan($transaction->creditCard);
+        $request->setCvv2($transaction->cvv);
+        $request->setExpiryDate(sprintf("%s%s", $transaction->expiryDateYear, $transaction->expiryDateMonth));
         $request->setTransactionType(Transaction::TYPE_AUTH);
 
         $this->merchant->signRequest($request);
@@ -80,43 +84,47 @@ class Redsys extends CreditCardAbstract
         $operation = $response->getOperation();
         $authCode = $operation ? trim((string) $operation->Ds_AuthorisationCode) : null;
 
-        // FIXME: Use Entity\Transaction instead
         if ($response->isValid() &&  !empty($authCode)){
-            $payment->setCompleted(true);
-            $payment->setAuthCode((string) $response->getOperation()->Ds_AuthorisationCode);
+
+            // TODO:
+            //$transaction->setStatus(Transaction::STATUS_SUCCESS);
+            $transaction->setAmount((string) $response->getOperation()->Ds_AuthorisationCode);
         } else {
-            $payment->setError($response->getCode());
+            // TODO:
+            // $transaction->setStatus(Transaction::STATUS_ERROR);
+            // TODO:
+            //$transaction->setStatusCode($response->getCode());
         }
 
-        $payment->setRawData($response->asXml());
+        $transaction->setRawData($response->asXml());
 
     }
 
     /**
-     * @param Payment $payment
+     * @param \Ilis\Bundle\PaymentBundle\Entity\Transaction\CreditCard $transaction
      */
-    public function authorize(Payment $payment, $amount){
+    public function authorize(CrediCardTranscation $transaction){
         // TODO:
     }
 
     /**
-     * @param Payment $payment
+     * @param \Ilis\Bundle\PaymentBundle\Entity\Transaction\CreditCard $transaction
      */
-    public function void (Payment $payment){
+    public function void (CrediCardTranscation $transaction){
         // TODO:
     }
 
     /**
-     * @param Payment $payment
+     * @param \Ilis\Bundle\PaymentBundle\Entity\Transaction\CreditCard $transaction
      */
-    public function fullfill(Payment $payment){
+    public function fulfill(CrediCardTranscation $transaction){
         // TODO:
     }
 
     /**
-     * @param Payment $payment
+     * @param \Ilis\Bundle\PaymentBundle\Entity\Transaction\CreditCard $transaction
      */
-    public function cancel(Payment $payment){
+    public function cancel(CrediCardTranscation $transaction){
 
     }
 

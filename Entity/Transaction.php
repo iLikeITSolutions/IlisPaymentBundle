@@ -19,9 +19,15 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\DiscriminatorMap({
         "cc" = "Ilis\Bundle\PaymentBundle\Entity\Transaction\CreditCard",
    })
+ * @ORM\HasLifecycleCallbacks()
  */
 class Transaction
 {
+
+    const STATUS_PENDING = 0;
+    const STATUS_SUCCESS = 1;
+    const STATUS_ERROR   = 2;
+
     /**
      * @ORM\Id
      * @ORM\Column(type="integer")
@@ -57,6 +63,14 @@ class Transaction
      */
     private $method;
 
+    /**
+     * @ORM\PrePersist
+     */
+    public function setDefaults()
+    {
+        if (null === $this->status)
+            $this->status = self::STATUS_PENDING;
+    }
     /**
      * Get id
      *
