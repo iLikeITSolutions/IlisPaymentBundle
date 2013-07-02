@@ -97,7 +97,7 @@ The possible values for environment are "testing", "integration", "production"
 
 ## Usage
 
-The main service you will use is the [Ilis\Bundle\PaymentBundle\Service](src/Service/Manager.php) that provides you with the methods to:
+The main service you will use is the [Ilis\Bundle\PaymentBundle\Service](Service/Manager.php) that provides you with the methods to:
 
 * Get available payment methods
 * Get payment methods configurations
