@@ -13,7 +13,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Ilis\Bundle\PaymentBundle\Entity\MethodConfigRepository")
  * @ORM\Table(name="ilis_payment_method_configs")
  * @ORM\HasLifecycleCallbacks()
  */

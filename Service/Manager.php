@@ -39,8 +39,9 @@ class Manager
      */
     public function methodIsAvailable(Method $method)
     {
-        // TODO:
-        return true;
+        $methods = $this->em->getRepository('IlisPaymentBundle:Method');
+        $enabledConfiguration = $methods->countConfigured($method, true);
+        return $enabledConfiguration > 0;
     }
 
     /**
@@ -57,15 +58,21 @@ class Manager
     /**
      * @param \Ilis\Bundle\PaymentBundle\Entity\Method $method
      * @throw Exception
-     * @return \Ilis\Bundle\PaymentBundle\Entity\Method
+     * @return \Ilis\Bundle\PaymentBundle\Entity\MethodConfig
      */
     public function getMethodConfig(Method $method)
     {
-        // TODO:
-        throw new Exception(sprintf(
-            'No configuration found for method "%s"',
-            $method->getName()
-        ));
+        $repository = $this->em->getRepository('IlisPaymentBundle:MethodConfig');
+        $configs = $repository->getByMethod($method, true);
+
+        if (count($configs) === 0 )
+            throw new Exception(sprintf(
+                'No configuration found for method "%s"',
+                $method->getName()
+            ));
+
+        // Since is theoretically possible that multiples configuration are available, we always return the first one
+        return array_shift($configs);
     }
 
     /**
