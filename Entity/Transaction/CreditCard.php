@@ -170,4 +170,27 @@ class CreditCard extends Transaction
     {
         return $this->rawData;
     }
+
+    /**
+     * Set cardHolderName
+     *
+     * @param string $cardHolderName
+     * @return CreditCard
+     */
+    public function setCardHolderName($cardHolderName)
+    {
+        $this->cardHolderName = $cardHolderName;
+
+        return $this;
+    }
+
+    /**
+     * Get cardHolderName
+     *
+     * @return string
+     */
+    public function getCardHolderName()
+    {
+        return $this->cardHolderName;
+    }
 }
