@@ -50,7 +50,7 @@ class Method
     private $attributes;
 
     /**
-     * @var ArrayCollection(targetEntity="Ilis\Bundle\PaymentBundle\Entity\MethodConfig", mappedBy="method")
+     * @var OneToMany(targetEntity="Ilis\Bundle\PaymentBundle\Entity\MethodConfig", mappedBy="method")
      */
     private $configs;
 
