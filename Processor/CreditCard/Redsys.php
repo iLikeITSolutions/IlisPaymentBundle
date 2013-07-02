@@ -86,12 +86,11 @@ class Redsys extends CreditCardAbstract
         $authCode = $operation ? trim((string) $operation->Ds_AuthorisationCode) : null;
 
         if ($response->isValid() &&  !empty($authCode)){
-$transaction->setStatus(Transaction::STATUS_SUCCESS);
+            $transaction->setStatus(Transaction::STATUS_SUCCESS);
             $transaction->setAuthCode((string) $response->getOperation()->Ds_AuthorisationCode);
         } else {
             $transaction->setStatus(Transaction::STATUS_ERROR);
-            // TODO:
-            //$transaction->setStatusCode($response->getCode());
+            $transaction->setStatusCode((string) $response->getCode());
         }
 
         $transaction->setRawData($response->asXml());

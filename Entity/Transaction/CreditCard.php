@@ -49,6 +49,13 @@ class CreditCard extends Transaction
     /**
      * @var string
      *
+     * @ORM\Column(name="status_code", type="string", length=32, nullable=true)
+     */
+    private $statusCode;
+
+    /**
+     * @var string
+     *
      * @ORM\Column(type="text", nullable=true)
      */
     private $rawData;
