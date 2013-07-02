@@ -71,15 +71,6 @@ class Transaction
         if (null === $this->status)
             $this->status = self::STATUS_PENDING;
     }
-    /**
-     * Get id
-     *
-     * @return integer
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
 
     /**
      * Set status
