@@ -32,7 +32,7 @@ class CreditCardType extends AbstractType
         }
 
         $builder
-            ->add('name')
+            ->add('cardHolderName')
             ->add('creditCard')
             ->add('cvv')
             ->add('expiryDateMonth', 'choice', array(

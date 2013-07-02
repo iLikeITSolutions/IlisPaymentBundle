@@ -35,6 +35,12 @@ class CreditCard extends Transaction
 
     /**
      * @var string
+     * @ORM\Column(type="string", nullable=true)
+     */
+    private $cardHolderName;
+
+    /**
+     * @var string
      *
      * @ORM\Column(name="auth_code", type="string", nullable=true)
      */
