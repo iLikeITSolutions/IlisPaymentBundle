@@ -73,6 +73,16 @@ class Transaction
     }
 
     /**
+     * Get id
+     *
+     * @return integer
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
      * Set status
      *
      * @param integer $status

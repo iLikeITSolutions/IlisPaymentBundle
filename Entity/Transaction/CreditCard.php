@@ -116,16 +116,6 @@ class CreditCard extends Transaction
     }
 
     /**
-     * Get id
-     *
-     * @return integer
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
-
-    /**
      * Set authCode
      *
      * @param string $authCode
