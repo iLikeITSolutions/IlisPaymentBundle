@@ -10,11 +10,12 @@
 namespace Ilis\Bundle\PaymentBundle\Processor\CreditCard;
 
 use Ilis\Bundle\PaymentBundle\Entity\MethodConfig;
+use Ilis\Bundle\PaymentBundle\Entity\Transaction;
 use Ilis\Bundle\PaymentBundle\Entity\Transaction\CreditCard as CrediCardTranscation;
-use Ilis\Bundle\PaymentBundle\Provider\Redsys\Webservice\Client;
-use Ilis\Bundle\PaymentBundle\Provider\Redsys\Webservice\Merchant;
-use Ilis\Bundle\PaymentBundle\Provider\Redsys\Webservice\Transaction;
-use Ilis\Bundle\PaymentBundle\Provider\Redsys\Webservice\Request;
+use Ilis\Bundle\PaymentBundle\Provider\Redsys\Webservice\Client as WsClient;
+use Ilis\Bundle\PaymentBundle\Provider\Redsys\Webservice\Merchant as WsMerchant;
+use Ilis\Bundle\PaymentBundle\Provider\Redsys\Webservice\Transaction as WsTransaction;
+use Ilis\Bundle\PaymentBundle\Provider\Redsys\Webservice\Request as WsRequest;
 use Ilis\Bundle\PaymentBundle\Exception\Exception;
 
 class Redsys extends CreditCardAbstract
@@ -37,7 +38,7 @@ class Redsys extends CreditCardAbstract
 
         parent::__construct($config);
 
-        $this->client = new Client($config->getEnvironment());
+        $this->client = new WsClient($config->getEnvironment());
 
         $this->merchant = new Merchant(
             $config->getMerchant(),
@@ -57,7 +58,7 @@ class Redsys extends CreditCardAbstract
 
         // TODO: Check if the transaction has set the proper payment method
 
-        $request = new Request();
+        $request = new WsRequest();
 
         $request->setOrder($transaction->getId());
 
@@ -76,7 +77,7 @@ class Redsys extends CreditCardAbstract
         $request->setPan($transaction->creditCard);
         $request->setCvv2($transaction->cvv);
         $request->setExpiryDate(sprintf("%s%s", $transaction->expiryDateYear, $transaction->expiryDateMonth));
-        $request->setTransactionType(Transaction::TYPE_AUTH);
+        $request->setTransactionType(WsTransaction::TYPE_AUTH);
 
         $this->merchant->signRequest($request);
 
@@ -85,13 +86,10 @@ class Redsys extends CreditCardAbstract
         $authCode = $operation ? trim((string) $operation->Ds_AuthorisationCode) : null;
 
         if ($response->isValid() &&  !empty($authCode)){
-
-            // TODO:
-            //$transaction->setStatus(Transaction::STATUS_SUCCESS);
+$transaction->setStatus(Transaction::STATUS_SUCCESS);
             $transaction->setAuthCode((string) $response->getOperation()->Ds_AuthorisationCode);
         } else {
-            // TODO:
-            // $transaction->setStatus(Transaction::STATUS_ERROR);
+            $transaction->setStatus(Transaction::STATUS_ERROR);
             // TODO:
             //$transaction->setStatusCode($response->getCode());
         }

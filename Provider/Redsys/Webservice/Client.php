@@ -9,7 +9,7 @@
 
 namespace Ilis\Bundle\PaymentBundle\Provider\Redsys\Webservice;
 
-class Client extends \Zend\Soap\Client
+class ClientClient extends \Zend\Soap\Client
 {
     // Environments
     const ENV_INTEGRATION						= 'integration';
