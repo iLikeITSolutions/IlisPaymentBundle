@@ -60,6 +60,39 @@ Since this is still not available, please follow the next steps to update the da
 
 ```
 
+### Configure the Payment Methods
+
+The only payment method available so far is the "Redsys (Webservice)". In order to use it you have to add
+your configuration for this method. 
+
+``` sql
+    INSERT INTO ilis_payment_method_configs (`method_id`, `status`) VALUES (
+        (SELECT id  FROM ilis_payment_methods WHERE code = 'redsys-webservice'),
+    	1
+    )
+```
+
+The Redsys method requires 4 attributes to be configured (merchant, terminal, secretKey, environment)
+
+Here is an example on how configure the merchant attribute for your newly created configuration
+
+``` sql
+    INSERT INTO ilis_payment_method_config_attributes (
+        `attribute_id`, 
+    	`config_id`, 
+    	`value`
+    )
+    VALUES (
+    	(SELECT id FROM ilis_payment_method_attributes WHERE name = 'merchant' AND method_id = (SELECT id FROM ilis_payment_methods WHERE code = 'redsys-webservice')),
+    	(SELECT id FROM ilis_payment_method_configs WHERE method_id = (SELECT id FROM ilis_payment_methods WHERE code = 'redsys-webservice')),
+    	<your-merchant-id>
+    )
+```
+
+Where <your-merchant-id> is the value that the Bank will provide you together with the other attributes' values.
+The others attributes can be configured in the same way, just change the attribute name an value accordingly.
+
+The possible values for environment are "testing", "integration", "production"
 
 
 
