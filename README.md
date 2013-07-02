@@ -149,7 +149,7 @@ Here is an example of a typical usage in a Controller to process a CreditCard AU
                 return $this->redirect($this->generateUrl('payment_success'));
 
             else $form->addError(new FormError(sprintf(
-                'We were unable to process this transaction. Error code is',
+                'We were unable to process this transaction. Error code is %s',
                 $transaction->getStatusCode()
             )));
         }
