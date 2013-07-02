@@ -125,7 +125,7 @@ class Redsys extends CreditCardAbstract
      * @param \Ilis\Bundle\PaymentBundle\Entity\Transaction\CreditCard $transaction
      */
     public function cancel(CrediCardTranscation $transaction){
-
+        // TODO:
     }
 
 }

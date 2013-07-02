@@ -38,7 +38,7 @@ class Manager
     public function methodIsAvailable(Method $method)
     {
         $methods = $this->em->getRepository('IlisPaymentBundle:Method');
-        $enabledConfiguration = $methods->countConfigured($method, true);
+        $enabledConfiguration = $methods->countConfigurations($method, true);
         return $enabledConfiguration > 0;
     }
 
