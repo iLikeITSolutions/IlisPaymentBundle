@@ -190,4 +190,27 @@ class CreditCard extends Transaction
     {
         return $this->cardHolderName;
     }
+
+    /**
+     * Set statusCode
+     *
+     * @param string $statusCode
+     * @return CreditCard
+     */
+    public function setStatusCode($statusCode)
+    {
+        $this->statusCode = $statusCode;
+
+        return $this;
+    }
+
+    /**
+     * Get statusCode
+     *
+     * @return string
+     */
+    public function getStatusCode()
+    {
+        return $this->statusCode;
+    }
 }
