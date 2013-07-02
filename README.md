@@ -95,6 +95,20 @@ The others attributes can be configured in the same way, just change the attribu
 The possible values for environment are "testing", "integration", "production"
 
 
+## Usage
+
+The main service you will use is the [Ilis\Bundle\PaymentBundle\Service](src/Service/Manager.php) that provides you with the methods to:
+
+* Get available payment methods
+* Get payment methods configurations
+* Process Transactions
+
+The service is labeled *ilis.payment.manager*
+
+
+
+
+
 
 
 
