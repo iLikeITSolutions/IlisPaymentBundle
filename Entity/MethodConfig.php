@@ -37,7 +37,7 @@ class MethodConfig {
     private $status;
 	
 	/**
-	 * @ORM\ManyToOne(targetEntity="Method")
+	 * @ORM\ManyToOne(targetEntity="Method", inversedBy="configs")
 	 */
 	private $method;
 

@@ -47,10 +47,11 @@ class Manager
      * @param bool $onlyAvailable
      * @return array
      */
-    public function getPaymentMethods($onlyAvailable = true)
+    public function getPaymentMethods($onlyEnabled = true)
     {
-        // TODO:
-        return array();
+        $repository = $this->em->getRepository('IlisPaymentBundle:Method');
+        $methods = $repository->getConfigured($onlyEnabled);
+        return $methods;
     }
 
     /**

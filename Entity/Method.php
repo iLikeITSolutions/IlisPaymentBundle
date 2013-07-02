@@ -10,9 +10,10 @@
 namespace Ilis\Bundle\PaymentBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Ilis\Bundle\PaymentBundle\Entity\MethodRepository")
  * @ORM\Table(name="ilis_payment_methods")
  */
 class Method
@@ -48,10 +49,16 @@ class Method
      */
     private $attributes;
 
+    /**
+     * @var ArrayCollection(targetEntity="Ilis\Bundle\PaymentBundle\Entity\MethodConfig", mappedBy="method")
+     */
+    private $configs;
+
 
     public function __construct()
     {
         $this->attributes = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->configs = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
