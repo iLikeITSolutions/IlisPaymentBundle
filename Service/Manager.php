@@ -7,7 +7,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Ilis\Bundle\PaymentBundle;
+namespace Ilis\Bundle\PaymentBundle\Service;
 
 use Doctrine\ORM\EntityManager;
 use Ilis\Bundle\PaymentBundle\Entity\Transaction;
@@ -31,8 +31,8 @@ class Manager
 
 
     /**
-     * @param Entity\Transaction $transaction
-     * @throws Exception\Exception
+     * @param Transaction $transaction
+     * @throws Exception
      */
     public function processTransaction(Transaction $transaction)
     {
@@ -52,7 +52,7 @@ class Manager
     }
 
     /**
-     * @param Entity\Transaction $transaction
+     * @param Transaction $transaction
      */
     protected function processCreditCardTransaction(CreditCardTransaction $transaction)
     {
