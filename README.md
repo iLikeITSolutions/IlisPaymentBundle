@@ -105,7 +105,7 @@ The main service you will use is the [Ilis\Bundle\PaymentBundle\Service](Service
 
 The service is labeled *ilis.payment.manager*
 
-Here is an example of a typical usage in a Controller to display a process a CreditCard AUTH Transaction
+Here is an example of a typical usage in a Controller to process a CreditCard AUTH Transaction
 
 ``` php
     
@@ -117,50 +117,50 @@ Here is an example of a typical usage in a Controller to display a process a Cre
     // ... 
     // Inside your controller action
     /** @var $manager  TransactionManager */
-        $manager = $this->get('ilis.payment.manager');
+    $manager = $this->get('ilis.payment.manager');
 
-        // Retrieve available payment methods
-        $methods = $manager->getPaymentMethods(true);
-        // Since we only have one method integrated, just use that
-        $method = array_shift($methods);
+    // Retrieve available payment methods
+    $methods = $manager->getPaymentMethods(true);
+    // Since we only have one method integrated, just use that
+    $method = array_shift($methods);
 
-        /** @var CreditCardTransactoin  */
-        $transaction = new CreditCardTransaction;
-        // Setup transaction
-        $transaction->setMethod($method);
-        $transaction->setType(CreditCardTransaction::TYPE_AUTH);
-        $transaction->setAmount(2.50);
+    /** @var CreditCardTransactoin  */
+    $transaction = new CreditCardTransaction;
+    // Setup transaction
+    $transaction->setMethod($method);
+    $transaction->setType(CreditCardTransaction::TYPE_AUTH);
+    $transaction->setAmount(2.50);
 
-        // Create the form
-        $form = $this->createForm(new CreditCardType(), $transaction);
+    // Create the form
+    $form = $this->createForm(new CreditCardType(), $transaction);
 
-        $request = $this->getRequest();
+    $request = $this->getRequest();
 
-        // Process form submission
-        if ($request->isMethod('POST'))
+    // Process form submission
+    if ($request->isMethod('POST'))
+    {
+        $form->bind($request);
+
+        if ($form->isValid())
         {
-            $form->bind($request);
+            $manager->processTransaction($transaction);
 
-            if ($form->isValid())
-            {
-                $manager->processTransaction($transaction);
+            if ($transaction->getStatus() === CreditCardTransaction::STATUS_SUCCESS)
+                return $this->redirect($this->generateUrl('payment_success'));
 
-                if ($transaction->getStatus() === CreditCardTransaction::STATUS_SUCCESS)
-                    return $this->redirect($this->generateUrl('payment_success'));
-
-                else $form->addError(new FormError(sprintf(
-                    'We were unable to process this transaction. Error code is',
-                    $transaction->getStatusCode()
-                )));
-            }
+            else $form->addError(new FormError(sprintf(
+                'We were unable to process this transaction. Error code is',
+                $transaction->getStatusCode()
+            )));
         }
+    }
 
-        // Render the view
-        return $this->render(
-            'PaymentBundle:Default:index.html.twig', array(
-                'form'  => $form->createView()
+    // Render the view
+    return $this->render(
+        'PaymentBundle:Default:index.html.twig', array(
+            'form'  => $form->createView()
 
-        ));
+    ));
 
 ```
 
