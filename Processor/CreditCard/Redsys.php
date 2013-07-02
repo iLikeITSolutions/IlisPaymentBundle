@@ -88,7 +88,7 @@ class Redsys extends CreditCardAbstract
 
             // TODO:
             //$transaction->setStatus(Transaction::STATUS_SUCCESS);
-            $transaction->setAmount((string) $response->getOperation()->Ds_AuthorisationCode);
+            $transaction->setAuthCode((string) $response->getOperation()->Ds_AuthorisationCode);
         } else {
             // TODO:
             // $transaction->setStatus(Transaction::STATUS_ERROR);

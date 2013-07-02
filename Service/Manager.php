@@ -16,7 +16,6 @@ use Ilis\Bundle\PaymentBundle\Entity\Transaction\CreditCard as CreditCardTransac
 use Ilis\Bundle\PaymentBundle\Exception\Exception;
 use Ilis\Bundle\PaymentBundle\Processor\ProcessorFactory;
 
-
 class Manager
 {
     /**
@@ -31,7 +30,6 @@ class Manager
     {
         $this->em = $em;
     }
-
 
     /**
      * @param \Ilis\Bundle\PaymentBundle\Entity\Method $method
