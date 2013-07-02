@@ -40,7 +40,7 @@ class Redsys extends CreditCardAbstract
 
         $this->client = new WsClient($config->getEnvironment());
 
-        $this->merchant = new Merchant(
+        $this->merchant = new WsMerchant(
             $config->getMerchant(),
             $config->getSecretKey(),
             $config->getTerminal()
