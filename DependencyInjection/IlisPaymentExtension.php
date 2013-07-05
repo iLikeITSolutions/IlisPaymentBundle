@@ -25,5 +25,14 @@ class IlisPaymentExtension extends Extension
         $loader = new XmlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
         $loader->load('services.xml');
 
+        $configuration = new Configuration();
+        $config = $this->processConfiguration($configuration, $configs);
+
+        if (isset($config['transaction_identifier_prefix']))
+            $container->setParameter(
+                'ilis.payment.transaction_identifier_prefix',
+                $config['transaction_identifier_prefix']
+            );
+
     }
 }

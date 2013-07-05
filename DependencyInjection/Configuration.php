@@ -22,6 +22,11 @@ class Configuration implements ConfigurationInterface
         $treeBuilder = new TreeBuilder();
         $rootNode = $treeBuilder->root('ilis_payment');
 
+        $rootNode
+            ->children()
+                ->scalarNode('transaction_identifier_prefix')
+            ->end();
+
         return $treeBuilder;
     }
 }
