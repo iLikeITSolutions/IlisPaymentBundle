@@ -95,6 +95,78 @@ The others attributes can be configured in the same way, just change the attribu
 The possible values for environment are "testing", "integration", "production"
 
 
+## Usage
+
+The main service you will use is the [Ilis\Bundle\PaymentBundle\Service\Manager](Service/Manager.php) that provides you with the methods to:
+
+* Get available payment methods
+* Get payment methods configurations
+* Process Transactions
+
+The service is labeled *ilis.payment.manager*
+
+Here is an example of a typical usage in a Controller to process a CreditCard AUTH Transaction
+
+``` php
+    
+    // ...
+    use Ilis\Bundle\PaymentBundle\Entity\Transaction\CreditCard as CreditCardTransaction;
+    use Ilis\Bundle\PaymentBundle\Form\Type\CreditCardType;
+    use Ilis\Bundle\PaymentBundle\Service\Manager as TransactionManager;
+    
+    // ... 
+    // Inside your controller action
+    /** @var $manager  TransactionManager */
+    $manager = $this->get('ilis.payment.manager');
+
+    // Retrieve available payment methods
+    $methods = $manager->getPaymentMethods(true);
+    // Since we only have one method integrated, just use that
+    $method = array_shift($methods);
+
+    /** @var CreditCardTransactoin  */
+    $transaction = new CreditCardTransaction;
+    // Setup transaction
+    $transaction->setMethod($method);
+    $transaction->setType(CreditCardTransaction::TYPE_AUTH);
+    $transaction->setAmount(2.50);
+
+    // Create the form
+    $form = $this->createForm(new CreditCardType(), $transaction);
+
+    $request = $this->getRequest();
+
+    // Process form submission
+    if ($request->isMethod('POST'))
+    {
+        $form->bind($request);
+
+        if ($form->isValid())
+        {
+            $manager->processTransaction($transaction);
+
+            if ($transaction->getStatus() === CreditCardTransaction::STATUS_SUCCESS)
+                return $this->redirect($this->generateUrl('payment_success'));
+
+            else $form->addError(new FormError(sprintf(
+                'We were unable to process this transaction. Error code is %s',
+                $transaction->getStatusCode()
+            )));
+        }
+    }
+
+    // Render the view
+    return $this->render(
+        'PaymentBundle:Default:index.html.twig', array(
+            'form'  => $form->createView()
+
+    ));
+
+```
+
+
+
+
 
 
 
