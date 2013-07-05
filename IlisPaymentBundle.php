@@ -10,7 +10,22 @@
 namespace Ilis\Bundle\PaymentBundle;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
+use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Ilis\Bundle\PaymentBundle\DependencyInjection\Compiler\RegisterPaymentListenersPass;
 
-class IlisPaymentBundle extends Bundle{
+class IlisPaymentBundle extends Bundle
+{
+
+    /**
+     * @param \Symfony\Component\DependencyInjection\ContainerBuilder $container
+     */
+    public function build(ContainerBuilder $container)
+    {
+        parent::build($container);
+
+        $container->addCompilerPass(
+            new RegisterPaymentListenersPass()
+        );
+    }
 
 }
