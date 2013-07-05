@@ -7,7 +7,7 @@
     <parameters>
         <parameter key="ilis.payment.manager.class">Ilis\Bundle\PaymentBundle\Service\Manager</parameter>
         <parameter key="ilis.payment.listener.orm.transaction_subscriber_class">Ilis\Bundle\PaymentBundle\EventListener\ORM\TransactionSubscriber</parameter>
-        <parameter key="ilis.payment.transaction_identifier_prefix">ILIS</parameter>
+        <parameter key="ilis.payment.transaction_identifier_prefix">%kernel.environment%</parameter>
 
     </parameters>
     <services>
