@@ -41,7 +41,7 @@ class Transaction
     /**
      * @var string
      *
-     * @ORM\Column(name="identifier")
+     * @ORM\Column(name="identifier", nullable=true)
      */
     private $identifier;
 
