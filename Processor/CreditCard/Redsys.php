@@ -70,7 +70,7 @@ class Redsys extends CreditCardAbstract
         )*100;
 
         $request->setAmount($amount);
-        $request->setOrder($transaction->getId());
+        $request->setOrder($transaction->getIdentifier());
         $request->setMerchantCode($this->merchant->getCode());
         $request->setTerminal($this->merchant->getTerminal());
         $request->setCurrency($this->merchant->getCurrency());
