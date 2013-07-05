@@ -40,6 +40,8 @@ class Transaction
 
     /**
      * @var string
+     *
+     * @ORM\Column(name="identifier")
      */
     private $identifier;
 
