@@ -164,6 +164,35 @@ Here is an example of a typical usage in a Controller to process a CreditCard AU
 
 ```
 
+### Transaction identifier
+
+Since most of the payment providers require to send an unique transaction identifier when a transaction is 
+initiated, we use a special field of the transactions table, that is the "identifier".
+
+The indentifier is nothing else than a string made by a \<TRANSACTION_IDENTIFIER_PREFIX\> and the \<TRANSACTION_ID\>
+
+By default we use the kernel.environment global container parameter as identifier so that, for example,  in
+your dev environment the transaction identifiers will look like this
+
+*"dev-123"*
+
+In addiction the prefix can be set in the bundle configuration for complete control over it.
+
+Here is how you the configuration of you *config.yml* should look like if you want to use "LOCAL" as transaction identifier prefix:
+
+
+``` yml
+ilis_payment:
+    transaction_identifier_prefix: "LOCAL"
+    
+```
+
+
+
+
+
+
+
 
 
 
