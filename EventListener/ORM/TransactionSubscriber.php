@@ -16,7 +16,6 @@ use Ilis\Bundle\PaymentBundle\Entity\Transaction;
 use Ilis\Bundle\PaymentBundle\PaymentEvents;
 use Ilis\Bundle\PaymentBundle\Event\TransactionCreatedEvent;
 
-
 class TransactionSubscriber implements EventSubscriber
 {
 
