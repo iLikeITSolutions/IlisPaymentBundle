@@ -10,6 +10,7 @@
 namespace Ilis\Bundle\PaymentBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Ilis\Bundle\PaymentBundle\Exception\Exception;
 
 /**
  * @ORM\Entity()
@@ -28,12 +29,19 @@ class Transaction
     const STATUS_SUCCESS = 1;
     const STATUS_ERROR   = 2;
 
+    const IDENTIFIER_SEPARATOR = '-';
+
     /**
      * @ORM\Id
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
+
+    /**
+     * @var string
+     */
+    private $identifier;
 
     /**
      * @var string
@@ -172,6 +180,31 @@ class Transaction
     public function getAmount()
     {
         return $this->amount;
+    }
+
+    /**
+     * Set Identifier
+     *
+     * @param string $prefix
+     * @return Transaction
+     */
+    public function setIdentifier($prefix)
+    {
+        if (null === $this->id)
+           throw new Exception('Transaction identifier can be set only if the Entity has the id set.');;
+
+        $this->identifier = "$prefix".self::IDENTIFIER_SEPARATOR.$this->getId();
+        return $this;
+    }
+
+    /**
+     * Get Identifier
+     *
+     * @return string
+     */
+    public function getIdentifier()
+    {
+        return $this->identifier;
     }
 
 

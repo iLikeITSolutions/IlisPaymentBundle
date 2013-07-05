@@ -6,10 +6,17 @@
 
     <parameters>
         <parameter key="ilis.payment.manager.class">Ilis\Bundle\PaymentBundle\Service\Manager</parameter>
+        <parameter key="ilis.payment.listener.orm.transaction_class">Ilis\Bundle\PaymentBundle\Listener\ORM\Transaction</parameter>
+        <parameter key="ilis.payment.transaction_identifier_prefix">ILIS</parameter>
+
     </parameters>
     <services>
         <service id="ilis.payment.manager" class="%ilis.payment.manager.class%">
             <argument type="service" id="doctrine.orm.entity_manager"></argument>
+        </service>
+        <service id="ilis.payment.listener.orm.transaction_subscriber" class="%ilis.payment.listener.orm.transaction_subscriber_class%" >
+            <argument>%ilis.payment.transaction_identifier_prefix%</argument>
+            <tag name="doctrine.event_subscriber"/>
         </service>
     </services>
 
