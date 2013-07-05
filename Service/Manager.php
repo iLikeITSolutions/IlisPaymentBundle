@@ -10,11 +10,14 @@
 namespace Ilis\Bundle\PaymentBundle\Service;
 
 use Doctrine\ORM\EntityManager;
+use Symfony\Component\EventDispatcher\ContainerAwareEventDispatcher;
 use Ilis\Bundle\PaymentBundle\Entity\Transaction;
 use Ilis\Bundle\PaymentBundle\Entity\Method;
 use Ilis\Bundle\PaymentBundle\Entity\Transaction\CreditCard as CreditCardTransaction;
 use Ilis\Bundle\PaymentBundle\Exception\Exception;
 use Ilis\Bundle\PaymentBundle\Processor\ProcessorFactory;
+use Ilis\Bundle\PaymentBundle\PaymentEvents;
+use Ilis\Bundle\PaymentBundle\Event\TransactionProcessedEvent;
 
 class Manager
 {
@@ -24,11 +27,17 @@ class Manager
     protected $em;
 
     /**
+     * @var ContainerAwareEventDispatcher
+     */
+    protected $dispatcher;
+
+    /**
      * @param \Doctrine\ORM\EntityManager $em
      */
-    public function __construct(EntityManager $em)
+    public function __construct(EntityManager $em, ContainerAwareEventDispatcher $dispatcher)
     {
         $this->em = $em;
+        $this->dispatcher = $dispatcher;
     }
 
     /**
@@ -104,6 +113,12 @@ class Manager
         // Persist processed transaction
         $this->em->persist($transaction);
         $this->em->flush();
+
+        // dispatch TransactionCreated event
+        $this->dispatcher->dispatch(
+            PaymentEvents::TRANSACTION_PROCESSED,
+            new TransactionProcessedEvent($transaction)
+        );
     }
 
     /**

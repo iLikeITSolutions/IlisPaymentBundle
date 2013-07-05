@@ -13,9 +13,11 @@
     <services>
         <service id="ilis.payment.manager" class="%ilis.payment.manager.class%">
             <argument type="service" id="doctrine.orm.entity_manager"></argument>
+            <argument type="service" id="event_dispatcher"></argument>
         </service>
         <service id="ilis.payment.listener.orm.transaction_subscriber" class="%ilis.payment.listener.orm.transaction_subscriber_class%" >
             <argument>%ilis.payment.transaction_identifier_prefix%</argument>
+            <argument type="service" id="event_dispatcher"></argument>
             <tag name="doctrine.event_subscriber"/>
         </service>
     </services>
