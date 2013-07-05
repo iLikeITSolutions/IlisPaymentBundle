@@ -21,7 +21,7 @@ abstract class TransactionEventAbstract extends Event
 
     public function __construct(Transaction $transaction)
     {
-        $this->transaction = $transaction
+        $this->transaction = $transaction;
     }
 
     /**
