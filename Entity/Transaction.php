@@ -196,11 +196,15 @@ class Transaction
            throw new Exception('Transaction identifier can be set only if the Entity has the id set.');;
 
         if (!empty($suffix))
-            $this->identifier = $this->getId() . self::IDENTIFIER_SEPARATOR.$this->getId() . $suffix;
+            $this->identifier = $this->id() . self::IDENTIFIER_SEPARATOR . $suffix;
         else
             $this->identifier = $this->getId();
 
+        $this->identifier = sprintf('%012s', $this->identifier);
+
         return $this;
+
+
     }
 
     /**
