@@ -189,6 +189,94 @@ ilis_payment:
 
 *Please note that in production environment the suffix will NOT take effect and no suffix is going to be used.*
 
+### Transaction Events
+
+During the transaction processing there are couple of events that are fired: 
+
+* ilis.payment.transaction.created
+* ilis.payment.transaction.processed
+
+This allow you to register listeners for these events. Here is some example code on how to do that in your application.
+
+``` php
+
+<?php
+
+namespace Acme\PaymentBundle\EventListener;
+
+use Ilis\Bundle\PaymentBundle\Event\TransactionCreatedEvent;
+use Ilis\Bundle\PaymentBundle\Event\TransactionProcessedEvent;
+use Monolog\Logger;
+
+
+class Transaction
+{
+
+    /**
+     * @var Logger
+     */
+    private $logger;
+
+    public function __construct(Logger $logger)
+    {
+        $this->logger = $logger;
+    }
+
+        /**
+     * @param \Ilis\Bundle\PaymentBundle\Event\TransactionCreatedEvent $event
+     */
+    public function onTransactionCreated(TransactionCreatedEvent $event)
+    {
+        $transaction = $event->getTransaction();
+
+        $this->logger->debug(
+            sprintf(
+                'Notified %s  (Identifier: %s)',
+                $event->getName(),
+                $transaction->getIdentifier()
+        ));
+    }
+
+    /**
+     * @param \Ilis\Bundle\PaymentBundle\Event\TransactionProcessedEvent $event
+     */
+    public function onTransactionProcessed(TransactionProcessedEvent $event)
+    {
+        $transaction = $event->getTransaction();
+
+        $this->logger->debug(
+            sprintf(
+                'Notified %s  (Identifier: %s)',
+                $event->getName(),
+                $transaction->getIdentifier()
+            ));
+    }
+
+}
+
+
+``` 
+
+``` yaml
+
+parameters:
+     payment.transaction_listener.class: Acme\PaymentBundle\EventListener\Transaction
+
+services:
+
+    transaction_listener:
+        class: %payment.transaction_listener.class%
+        arguments: [@logger]
+        tags:
+              - { name: ilis.payment.event_listener, event: ilis.payment.transaction.created, method: onTransactionCreated }
+              - { name: ilis.payment.event_listener, event: ilis.payment.transaction.processed, method: onTransactionProcessed }
+
+
+```
+
+
+
+
 
 
 
