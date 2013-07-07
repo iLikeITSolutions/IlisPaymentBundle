@@ -29,7 +29,7 @@ class IlisPaymentExtension extends Extension
         $config = $this->processConfiguration($configuration, $configs);
 
         if (array_key_exists('transaction_identifier_suffix', $config)
-                && $container->getParameter('kernel.environment') !== prod)
+                && $container->getParameter('kernel.environment') !== "prod")
         {
             $container->setParameter(
                 'ilis.payment.transaction_identifier_suffix',
