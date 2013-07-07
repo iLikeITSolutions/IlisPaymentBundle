@@ -187,7 +187,7 @@ ilis_payment:
     
 ```
 
-* Please note that in production environment the suffix will NOT take effect and no suffix is going to be used.*
+*Please note that in production environment the suffix will NOT take effect and no suffix is going to be used.*
 
 
 
