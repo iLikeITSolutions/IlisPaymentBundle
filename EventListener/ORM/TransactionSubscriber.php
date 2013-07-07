@@ -22,7 +22,7 @@ class TransactionSubscriber implements EventSubscriber
     /**
      * @var string
      */
-    private $identifierPrefix;
+    private $identifierSuffix;
 
     /**
      * @var ContainerAwareEventDispatcher
@@ -30,11 +30,11 @@ class TransactionSubscriber implements EventSubscriber
     private $dispatcher;
 
     /**
-     * @param $prefix string
+     * @param $suffix string
      */
-    public function __construct($prefix, ContainerAwareEventDispatcher $dispatcher)
+    public function __construct($suffix, ContainerAwareEventDispatcher $dispatcher)
     {
-        $this->identifierPrefix = $prefix;
+        $this->identifierSuffix = $suffix;
         $this->dispatcher = $dispatcher;
     }
 
@@ -59,7 +59,7 @@ class TransactionSubscriber implements EventSubscriber
         if (!$entity instanceof Transaction)
             return;
 
-        $entity->setIdentifier($this->identifierPrefix);
+        $entity->setIdentifier($this->identifierSuffix);
 
         $em = $args->getEntityManager();
         $em->persist($entity);

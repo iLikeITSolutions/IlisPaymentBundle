@@ -28,10 +28,10 @@ class IlisPaymentExtension extends Extension
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
 
-        if (isset($config['transaction_identifier_prefix']))
+        if (isset($config['transaction_identifier_suffix']))
             $container->setParameter(
-                'ilis.payment.transaction_identifier_prefix',
-                $config['transaction_identifier_prefix']
+                'ilis.payment.transaction_identifier_suffix',
+                $config['transaction_identifier_suffix']
             );
 
     }

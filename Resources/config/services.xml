@@ -7,7 +7,7 @@
     <parameters>
         <parameter key="ilis.payment.manager.class">Ilis\Bundle\PaymentBundle\Service\Manager</parameter>
         <parameter key="ilis.payment.listener.orm.transaction_subscriber_class">Ilis\Bundle\PaymentBundle\EventListener\ORM\TransactionSubscriber</parameter>
-        <parameter key="ilis.payment.transaction_identifier_prefix">%kernel.environment%</parameter>
+        <parameter key="ilis.payment.transaction_identifier_suffix">%kernel.environment%</parameter>
 
     </parameters>
     <services>
@@ -16,7 +16,7 @@
             <argument type="service" id="event_dispatcher"></argument>
         </service>
         <service id="ilis.payment.listener.orm.transaction_subscriber" class="%ilis.payment.listener.orm.transaction_subscriber_class%" >
-            <argument>%ilis.payment.transaction_identifier_prefix%</argument>
+            <argument>%ilis.payment.transaction_identifier_suffix%</argument>
             <argument type="service" id="event_dispatcher"></argument>
             <tag name="doctrine.event_subscriber"/>
         </service>

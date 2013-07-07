@@ -187,15 +187,19 @@ class Transaction
     /**
      * Set Identifier
      *
-     * @param string $prefix
+     * @param string $suffix
      * @return Transaction
      */
-    public function setIdentifier($prefix)
+    public function setIdentifier($suffix = null)
     {
         if (null === $this->id)
            throw new Exception('Transaction identifier can be set only if the Entity has the id set.');;
 
-        $this->identifier = "$prefix".self::IDENTIFIER_SEPARATOR.$this->getId();
+        if (!empty($suffix))
+            $this->identifier = $this->getId() . self::IDENTIFIER_SEPARATOR.$this->getId() . $suffix;
+        else
+            $this->identifier = $this->getId();
+
         return $this;
     }
 

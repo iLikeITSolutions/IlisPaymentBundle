@@ -24,7 +24,7 @@ class Configuration implements ConfigurationInterface
 
         $rootNode
             ->children()
-                ->scalarNode('transaction_identifier_prefix')
+                ->scalarNode('transaction_identifier_suffix')
             ->end();
 
         return $treeBuilder;
