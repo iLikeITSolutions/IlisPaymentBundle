@@ -222,7 +222,7 @@ class Transaction
         $this->logger = $logger;
     }
 
-        /**
+    /**
      * @param \Ilis\Bundle\PaymentBundle\Event\TransactionCreatedEvent $event
      */
     public function onTransactionCreated(TransactionCreatedEvent $event)
@@ -257,7 +257,7 @@ class Transaction
 
 ``` 
 
-``` yaml
+``` yml
 
 parameters:
      payment.transaction_listener.class: Acme\PaymentBundle\EventListener\Transaction
