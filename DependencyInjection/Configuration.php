@@ -11,6 +11,7 @@ namespace Ilis\Bundle\PaymentBundle\DependencyInjection;
 
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
+use Ilis\Bundle\PaymentBundle\Provider\Redsys\Webservice\Client;
 
 class Configuration implements ConfigurationInterface
 {

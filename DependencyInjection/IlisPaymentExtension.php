@@ -13,7 +13,6 @@ use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
 use Symfony\Component\Config\FileLocator;
-use Ilis\Bundle\PaymentBundle\Provider\Redsys\Webservice\Client;
 
 class IlisPaymentExtension extends Extension
 {
