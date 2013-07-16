@@ -9,35 +9,17 @@
 
 namespace Ilis\Bundle\PaymentBundle\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 
-/**
- * @ORM\Entity(repositoryClass="Ilis\Bundle\PaymentBundle\Entity\MethodRepository")
- * @ORM\Table(name="ilis_payment_methods")
- */
 class Method
 {
     const TYPE_CREDITCARD = 'cc';
-
-    const CODE_REDSYS_WEBSERVICE = 'redsys-webservice';
-
-    /**
-     * @ORM\Id
-     * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
-    private $id;
+    const CODE_REDSYS_WEBSERVICE = 'redsys_webservice';
 
     /**
-     * @ORM\Column(type="string", nullable=false)
+     * @var string
      */
     private $type;
-
-    /**
-     * @ORM\Column(type="string", nullable=false)
-     */
-    private $name;
 
     /**
      * @ORM\Column(type="string", nullable=false)
@@ -45,30 +27,13 @@ class Method
     private $code;
 
     /**
-     * @ORM\OneToMany(targetEntity="Ilis\Bundle\PaymentBundle\Entity\MethodAttribute", mappedBy="method", cascade={"persist"}, orphanRemoval=true);
+     * @var \Doctrine\Common\Collections\ArrayCollection
      */
     private $attributes;
-
-    /**
-     * @ORM\OneToMany(targetEntity="Ilis\Bundle\PaymentBundle\Entity\MethodConfig", mappedBy="method")
-     */
-    private $configs;
-
 
     public function __construct()
     {
         $this->attributes = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->configs = new \Doctrine\Common\Collections\ArrayCollection();
-    }
-
-    /**
-     * Get id
-     *
-     * @return integer
-     */
-    public function getId()
-    {
-        return $this->id;
     }
 
     /**
@@ -89,26 +54,6 @@ class Method
     public function getType()
     {
         return $this->type;
-    }
-
-    /**
-     * Set name
-     *
-     * @param string $name
-     */
-    public function setName($name)
-    {
-        $this->name = $name;
-    }
-
-    /**
-     * Get name
-     *
-     * @return string
-     */
-    public function getName()
-    {
-        return $this->name;
     }
 
     /**
@@ -136,10 +81,9 @@ class Method
      *
      * @param Ilis\Bundle\PaymentBundle\Entity\MethodAttribute $attributes
      */
-    public function addMethodAttribute(\Ilis\Bundle\PaymentBundle\Entity\MethodAttribute $attribute)
+    public function addAttribute($key, $value)
     {
-        $attribute->setMethod($this);
-        $this->attributes[] = $attribute;
+        $this->attributes->set($key, $value);
     }
 
     /**
@@ -150,5 +94,41 @@ class Method
     public function getAttributes()
     {
         return $this->attributes;
+    }
+
+    /**
+     *
+     * @param string $key
+     * @return string
+     */
+    public function getAttribute($key){
+
+        return $this->attributes->get($key);
+    }
+
+    /**
+     * Magic attribute getter
+     *
+     * @param string $method
+     * @param array $args
+     * @return string
+     */
+    public function __call($method, $args){
+
+        if (substr($method,0,3) === 'get'){
+            $key = $this->underscore(substr($method,3));
+            return $this->attributes->get($key);
+        }
+    }
+
+    /**
+     * Converts field names for setters and getters
+     * @param string $name
+     * @return string
+     */
+    private function underscore($name)
+    {
+        $result = strtolower(preg_replace('/(.)([A-Z])/', "$1_$2", $name));
+        return $result;
     }
 }

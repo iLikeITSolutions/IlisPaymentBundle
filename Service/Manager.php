@@ -18,6 +18,7 @@ use Ilis\Bundle\PaymentBundle\Exception\Exception;
 use Ilis\Bundle\PaymentBundle\Processor\ProcessorFactory;
 use Ilis\Bundle\PaymentBundle\PaymentEvents;
 use Ilis\Bundle\PaymentBundle\Event\TransactionProcessedEvent;
+use Doctrine\Common\Collections\ArrayCollection;
 
 class Manager
 {
@@ -32,12 +33,26 @@ class Manager
     protected $dispatcher;
 
     /**
+     * @var ArrrayCollection
+     */
+    protected $methods;
+
+    /**
      * @param \Doctrine\ORM\EntityManager $em
      */
     public function __construct(EntityManager $em, ContainerAwareEventDispatcher $dispatcher)
     {
         $this->em = $em;
         $this->dispatcher = $dispatcher;
+        $this->methods[] = new ArrayCollection();
+    }
+
+    /**
+     * @param array $methodConfig
+     */
+    public function addMethod(Method $method)
+    {
+        $this->methods->add($method);
     }
 
     /**
@@ -46,40 +61,20 @@ class Manager
      */
     public function methodIsAvailable(Method $method)
     {
-        $methods = $this->em->getRepository('IlisPaymentBundle:Method');
-        $enabledConfiguration = $methods->countConfigurations($method, true);
-        return $enabledConfiguration > 0;
+        foreach ($this->methods as $availableMethod)
+            if ($availableMethod->getCode() === $method->getCode())
+                return true;
+
+        return false;
     }
 
     /**
      * @param bool $onlyAvailable
      * @return array
      */
-    public function getPaymentMethods($onlyEnabled = true)
+    public function getPaymentMethods()
     {
-        $repository = $this->em->getRepository('IlisPaymentBundle:Method');
-        $methods = $repository->getConfigured($onlyEnabled);
-        return $methods;
-    }
-
-    /**
-     * @param \Ilis\Bundle\PaymentBundle\Entity\Method $method
-     * @throw Exception
-     * @return \Ilis\Bundle\PaymentBundle\Entity\MethodConfig
-     */
-    public function getMethodConfig(Method $method)
-    {
-        $repository = $this->em->getRepository('IlisPaymentBundle:MethodConfig');
-        $configs = $repository->getByMethod($method, true);
-
-        if (count($configs) === 0 )
-            throw new Exception(sprintf(
-                'No configuration found for method "%s"',
-                $method->getName()
-            ));
-
-        // Since is theoretically possible that multiples configuration are available, we always return the first one
-        return array_shift($configs);
+        return $this->methods;
     }
 
     /**
@@ -167,8 +162,7 @@ class Manager
      */
     protected function getProcessor(Method $method)
     {
-        $config = $this->getMethodConfig($method);
-        $processor = ProcessorFactory::makeProcessor($config);
+        $processor = ProcessorFactory::makeProcessor($method);
 
         if (!is_subclass_of($processor, 'Ilis\Bundle\PaymentBundle\Processor\ProcessorAbstract'))
             throw new Exception(sprintf(

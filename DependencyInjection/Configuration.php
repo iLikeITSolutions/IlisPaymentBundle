@@ -30,7 +30,7 @@ class Configuration implements ConfigurationInterface
             ->arrayNode('methods')
                 ->isRequired()
                 ->children()
-                    ->arrayNode('redsys-webservice')
+                    ->arrayNode('redsys_webservice')
                         ->canBeUnset()
                         ->canBeEnabled()
                         ->children()
