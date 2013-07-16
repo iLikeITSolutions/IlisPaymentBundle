@@ -38,6 +38,7 @@ class IlisPaymentExtension extends Extension
             return;
         }
 
+        // Transaction Identifier
         if (array_key_exists('transaction_identifier_suffix', $config))
         {
             $container->setParameter(
@@ -46,10 +47,20 @@ class IlisPaymentExtension extends Extension
             );
         }
 
+        // Methods
         if (array_key_exists('methods', $config))
         {
-            var_dump ($config['methods']);
+            $this->methodsLoad($config['method'], $container);
         }
+
+    }
+
+    /**
+     * @param $config
+     * @param \Symfony\Component\DependencyInjection\ContainerBuilder $container
+     */
+    public function methodsLoad($config, ContainerBuilder $container)
+    {
 
     }
 }
