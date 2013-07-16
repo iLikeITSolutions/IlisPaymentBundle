@@ -42,6 +42,7 @@ class Configuration implements ConfigurationInterface
                                 ->children()
                                     ->scalarNode()
                                     ->end()
+                            ->end()
                         ->end()
                     ->end()
                 ->end()
