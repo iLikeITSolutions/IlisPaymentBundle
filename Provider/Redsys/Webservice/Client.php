@@ -16,7 +16,7 @@ class Client extends \Zend\Soap\Client
     const ENV_TESTING							= 'testing';
     const ENV_PRODUCTION						= 'production';
 
-    const SOAP_REQUEST_WRAPPER					= 'datoEntrada';
+    const SOAP_REQUEST_WRAPPER                  = 'datoEntrada';
 
     /**
      *
@@ -26,7 +26,7 @@ class Client extends \Zend\Soap\Client
      */
     private $wsdls = array (
         self::ENV_INTEGRATION 	=> 'https://sis-i.redsys.es:25443/sis/services/SerClsWSEntrada/wsdl/SerClsWSEntrada.wsdl',
-        self::ENV_TESTING 		=> 'https://sis-t.sermepa.es:25443/sis/services/SerClsWSEntrada?WSDL',
+        self::ENV_TESTING       => 'https://sis-t.sermepa.es:25443/sis/services/SerClsWSEntrada?WSDL',
         self::ENV_PRODUCTION	=> 'https://sis.sermepa.es/sis/services/SerClsWSEntrada?WSDL',
     );
 

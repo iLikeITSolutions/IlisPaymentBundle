@@ -15,6 +15,7 @@ use Symfony\Component\EventDispatcher\ContainerAwareEventDispatcher;
 use Ilis\Bundle\PaymentBundle\Entity\Transaction;
 use Ilis\Bundle\PaymentBundle\PaymentEvents;
 use Ilis\Bundle\PaymentBundle\Event\TransactionCreatedEvent;
+use Ilis\Bundle\PaymentBundle\Event\TransactionUpdatedEvent;
 
 class TransactionSubscriber implements EventSubscriber
 {
@@ -45,7 +46,8 @@ class TransactionSubscriber implements EventSubscriber
     public function getSubscribedEvents()
     {
         return array(
-            'postPersist'
+            'postPersist',
+            'postUpdate'
         );
     }
 
@@ -68,6 +70,23 @@ class TransactionSubscriber implements EventSubscriber
         $this->dispatcher->dispatch(
             PaymentEvents::TRANSACTION_CREATED,
             new TransactionCreatedEvent($entity)
+        );
+
+    }
+
+    /**
+     * @param \Doctrine\ORM\Event\LifecycleEventArgs $args
+     */
+    public function postUpdate(LifecycleEventArgs $args)
+    {
+        $entity = $args->getEntity();
+
+        if (!$entity instanceof Transaction)
+            return;
+
+        $this->dispatcher->dispatch(
+            PaymentEvents::TRANSACTION_UPDATE,
+            new TransactionUpdatedEvent($entity)
         );
 
     }

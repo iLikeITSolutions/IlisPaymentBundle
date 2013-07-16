@@ -12,5 +12,6 @@ namespace Ilis\Bundle\PaymentBundle;
 class PaymentEvents
 {
     const TRANSACTION_CREATED   = 'ilis.payment.transaction.created';
+    const TRANSACTION_UPDATED   = 'ilis.payment.transaction.updated';
     const TRANSACTION_PROCESSED = 'ilis.payment.transaction.processed';
 }

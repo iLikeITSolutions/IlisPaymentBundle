@@ -154,7 +154,7 @@ class Manager
             case CreditCardTransaction::TYPE_CANCEL:
             default:
                 throw new Exception(sprintf(
-                    'Unhandled transaction type "%"',
+                    'Unhandled transaction type "%s"',
                     $type
                 ));
         }
