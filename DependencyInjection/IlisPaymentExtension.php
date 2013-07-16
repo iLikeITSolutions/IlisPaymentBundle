@@ -50,7 +50,7 @@ class IlisPaymentExtension extends Extension
         // Methods
         if (array_key_exists('methods', $config))
         {
-            $this->methodsLoad($config['method'], $container);
+            $this->methodsLoad($config['methods'], $container);
         }
 
     }
