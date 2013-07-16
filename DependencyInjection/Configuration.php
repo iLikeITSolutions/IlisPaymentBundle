@@ -31,6 +31,7 @@ class Configuration implements ConfigurationInterface
                     ->requiresAtLeastOneElement()
                     ->useAttributeAsKey('name')
                     ->prototype('array')
+                        ->addDefaultsIfNotSet()
                         ->children()
                             ->booleanNode('enabled')
                                 ->isRequired()
