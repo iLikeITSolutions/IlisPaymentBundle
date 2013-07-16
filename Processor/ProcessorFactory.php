@@ -16,7 +16,7 @@ class ProcessorFactory
 {
 
     /**
-     * @param \Ilis\Bundle\PaymentBundle\Entity\MethodConfig $config
+     * @param \Ilis\Bundle\PaymentBundle\Entity\Method $method
      * @return ProcessorAbstract
      * @throws \Ilis\Bundle\PaymentBundle\Exception\Exception
      */
