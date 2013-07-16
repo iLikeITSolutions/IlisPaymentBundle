@@ -25,6 +25,19 @@ class Configuration implements ConfigurationInterface
         $rootNode
             ->children()
                 ->scalarNode('transaction_identifier_suffix')
+                ->end()
+                ->arrayNode('methods')
+                    ->isRequired()
+                    ->requiresAtLeastOneElement()
+                    ->useAttributeAsKey('name')
+                    ->prototype('array')
+                        ->children()
+                            ->scalarNode('value')
+                            ->isRequired()
+                            ->end()
+                        ->end()
+                    ->end()
+                ->end()
             ->end();
 
         return $treeBuilder;

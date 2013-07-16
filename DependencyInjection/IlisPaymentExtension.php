@@ -46,5 +46,10 @@ class IlisPaymentExtension extends Extension
             );
         }
 
+        if (array_key_exists('methods', $config))
+        {
+            var_dump ($config['methods']);
+        }
+
     }
 }
