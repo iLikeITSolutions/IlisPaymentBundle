@@ -71,7 +71,6 @@ class IlisPaymentExtension extends Extension
             $container->getDefinition('ilis.payment.manager')
                 ->addMethodCall('addMethod', array($methodCode, $methodConfig));
 
-
         }
     }
 }

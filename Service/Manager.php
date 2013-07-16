@@ -44,7 +44,7 @@ class Manager
     {
         $this->em = $em;
         $this->dispatcher = $dispatcher;
-        $this->methods[] = new ArrayCollection();
+        $this->methods = new ArrayCollection();
     }
 
     /**
