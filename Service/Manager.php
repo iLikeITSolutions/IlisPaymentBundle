@@ -50,9 +50,17 @@ class Manager
     /**
      * @param array $methodConfig
      */
-    public function addMethod(Method $method)
+    public function addMethod($code, array $methodConfig)
     {
+
+        $method = new Method();
+        $method->setCode($code);
+
+        foreach($methodConfig as $key => $value)
+            $method->addAttribute($key, $value);
+
         $this->methods->add($method);
+
     }
 
     /**

@@ -13,7 +13,6 @@ use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
 use Symfony\Component\Config\FileLocator;
-use Ilis\Bundle\PaymentBundle\Entity\Method;
 
 class IlisPaymentExtension extends Extension
 {
@@ -69,14 +68,8 @@ class IlisPaymentExtension extends Extension
 
             unset($methodConfig['enabled']);
 
-            $method = new Method();
-            $method->setCode($methodCode);
-
-            foreach($methodConfig as $key => $value)
-                $method->addAttribute($key, $value);
-
             $container->getDefinition('ilis.payment.manager')
-                    ->addMethodCall('addMethod', array($method));
+                ->addMethodCall('addMethod', array($methodCode, $methodConfig));
 
 
         }
