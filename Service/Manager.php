@@ -19,6 +19,7 @@ use Ilis\Bundle\PaymentBundle\Processor\ProcessorFactory;
 use Ilis\Bundle\PaymentBundle\PaymentEvents;
 use Ilis\Bundle\PaymentBundle\Event\TransactionProcessedEvent;
 use Doctrine\Common\Collections\ArrayCollection;
+use Monolog\Logger;
 
 class Manager
 {
@@ -40,11 +41,12 @@ class Manager
     /**
      * @param \Doctrine\ORM\EntityManager $em
      */
-    public function __construct(EntityManager $em, ContainerAwareEventDispatcher $dispatcher)
+    public function __construct(EntityManager $em, ContainerAwareEventDispatcher $dispatcher, Logger $logger)
     {
         $this->em = $em;
         $this->dispatcher = $dispatcher;
         $this->methods = new ArrayCollection();
+        $this->logger = $logger;
     }
 
     /**
@@ -135,6 +137,8 @@ class Manager
         switch($type)
         {
             case CreditCardTransaction::TYPE_AUTH:
+
+                $this->logger->debug(serialize($transaction));
 
                 if (null !== $transaction->getId())
                     //$transaction = clone $transaction;
