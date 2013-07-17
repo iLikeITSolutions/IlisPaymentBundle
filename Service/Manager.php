@@ -136,11 +136,8 @@ class Manager
         {
             case CreditCardTransaction::TYPE_AUTH:
 
-                // TODO: If transaction already has an id clone it and use the new instance
                 if (null !== $transaction->getId())
-                    throw new Exception(sprintf(
-                       "Invalid transaction"
-                    ));
+                    $transaction = clone $transaction;
 
                 // Persist pending transaction
                 $this->em->persist($transaction);
