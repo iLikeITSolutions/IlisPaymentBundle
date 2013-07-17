@@ -78,7 +78,7 @@ class Manager
 
     /**
      * @param bool $onlyAvailable
-     * @return array
+     * @return ArrayCollection
      */
     public function getPaymentMethods()
     {
