@@ -118,10 +118,10 @@ class Transaction
     /**
      * Set method
      *
-     * @param string $method
+     * @param Method $method
      * @return Transaction
      */
-    public function setMethod($method)
+    public function setMethod(Method $method)
     {
         $this->method = $method;
 
@@ -131,7 +131,7 @@ class Transaction
     /**
      * Get method
      *
-     * @return string
+     * @return Method
      */
     public function getMethod()
     {

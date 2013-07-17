@@ -121,6 +121,14 @@ class Method
     }
 
     /**
+     * @return string
+     */
+    public function __toString()
+    {
+        return $this->code;
+    }
+
+    /**
      * Converts field names for setters and getters
      * @param string $name
      * @return string
