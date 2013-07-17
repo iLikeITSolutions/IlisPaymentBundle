@@ -85,7 +85,7 @@ class TransactionSubscriber implements EventSubscriber
             return;
 
         $this->dispatcher->dispatch(
-            PaymentEvents::TRANSACTION_UPDATE,
+            PaymentEvents::TRANSACTION_UPDATED,
             new TransactionUpdatedEvent($entity)
         );
 
