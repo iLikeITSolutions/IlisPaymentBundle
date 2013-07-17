@@ -137,7 +137,8 @@ class Manager
             case CreditCardTransaction::TYPE_AUTH:
 
                 if (null !== $transaction->getId())
-                    $transaction = clone $transaction;
+                    //$transaction = clone $transaction;
+                    throw new Exception('Invalid transaction');
 
                 // Persist pending transaction
                 $this->em->persist($transaction);

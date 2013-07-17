@@ -207,6 +207,7 @@ class Transaction
 
     }
 
+    /*
     public function __clone()
     {
         if (null !== $this->id)
@@ -216,6 +217,7 @@ class Transaction
             $this->status = null;
         }
     }
+    */
 
     /**
      * Get Identifier
