@@ -138,7 +138,7 @@ class Manager
         {
             case CreditCardTransaction::TYPE_AUTH:
 
-                $this->logger->debug(serialize($transaction));
+                $this->logger->debug(var_export($transaction->getId()));
 
                 if (null !== $transaction->getId())
                     //$transaction = clone $transaction;
