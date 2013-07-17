@@ -136,7 +136,7 @@ Here is an example of a typical usage in a Controller to process a CreditCard AU
     // Retrieve available payment methods
     $methods = $manager->getPaymentMethods(true);
     // Since we only have one method integrated, just use that
-    $method = array_shift($methods);
+    $method = $methods->first();
 
     /** @var CreditCardTransactoin  */
     $transaction = new CreditCardTransaction;
