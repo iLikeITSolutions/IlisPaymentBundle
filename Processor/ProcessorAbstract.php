@@ -9,21 +9,21 @@
 
 namespace Ilis\Bundle\PaymentBundle\Processor;
 
-use Ilis\Bundle\PaymentBundle\Entity\MethodConfig;
+use Ilis\Bundle\PaymentBundle\Entity\Method;
 
 abstract class ProcessorAbstract
 {
     /**
-     * @var MethodConfig
+     * @var Method
      */
-    private $config;
+    private $method;
 
     /**
-     * @param \Ilis\Bundle\PaymentBundle\Entity\MethodConfig $config
+     * @param \Ilis\Bundle\PaymentBundle\Entity\Method $method
      */
-    public function __construct (MethodConfig $config){
+    public function __construct (Method $method){
 
-        $this->config = $config;
+        $this->method = $method;
 
     }
 

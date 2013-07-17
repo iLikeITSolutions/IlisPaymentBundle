@@ -10,26 +10,24 @@
 namespace Ilis\Bundle\PaymentBundle\Processor;
 
 use Ilis\Bundle\PaymentBundle\Entity\Method;
-use Ilis\Bundle\PaymentBundle\Entity\MethodConfig;
 use Ilis\Bundle\PaymentBundle\Exception\Exception;
 
 class ProcessorFactory
 {
 
     /**
-     * @param \Ilis\Bundle\PaymentBundle\Entity\MethodConfig $config
+     * @param \Ilis\Bundle\PaymentBundle\Entity\Method $method
      * @return ProcessorAbstract
      * @throws \Ilis\Bundle\PaymentBundle\Exception\Exception
      */
-    public static function makeProcessor(MethodConfig $config)
+    public static function makeProcessor(Method $method)
     {
-        $method = $config->getMethod();
         $code = $method->getCode();
 
         switch ($code)
         {
             case Method::CODE_REDSYS_WEBSERVICE:
-                $processor = new CreditCard\Redsys($config);
+                $processor = new CreditCard\Redsys($method);
                 break;
             default:
                 throw new Exception(sprintf(

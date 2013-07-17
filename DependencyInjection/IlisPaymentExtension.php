@@ -38,6 +38,7 @@ class IlisPaymentExtension extends Extension
             return;
         }
 
+        // Transaction Identifier
         if (array_key_exists('transaction_identifier_suffix', $config))
         {
             $container->setParameter(
@@ -46,5 +47,30 @@ class IlisPaymentExtension extends Extension
             );
         }
 
+        // Methods
+        if (array_key_exists('methods', $config))
+        {
+            $this->methodsLoad($config['methods'], $container);
+        }
+
+    }
+
+    /**
+     * @param $config
+     * @param \Symfony\Component\DependencyInjection\ContainerBuilder $container
+     */
+    public function methodsLoad($config, ContainerBuilder $container)
+    {
+        foreach ($config as $methodCode => $methodConfig)
+        {
+            if ($methodConfig['enabled'] === false)
+                continue;
+
+            unset($methodConfig['enabled']);
+
+            $container->getDefinition('ilis.payment.manager')
+                ->addMethodCall('addMethod', array($methodCode, $methodConfig));
+
+        }
     }
 }

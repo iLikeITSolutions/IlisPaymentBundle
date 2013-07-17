@@ -9,9 +9,9 @@
 
 namespace Ilis\Bundle\PaymentBundle\Processor\CreditCard;
 
-use Ilis\Bundle\PaymentBundle\Entity\MethodConfig;
+use Ilis\Bundle\PaymentBundle\Entity\Method;
 use Ilis\Bundle\PaymentBundle\Entity\Transaction;
-use Ilis\Bundle\PaymentBundle\Entity\Transaction\CreditCard as CrediCardTranscation;
+use Ilis\Bundle\PaymentBundle\Entity\Transaction\CreditCard as CreditCardTransaction;
 use Ilis\Bundle\PaymentBundle\Provider\Redsys\Webservice\Client as WsClient;
 use Ilis\Bundle\PaymentBundle\Provider\Redsys\Webservice\Merchant as WsMerchant;
 use Ilis\Bundle\PaymentBundle\Provider\Redsys\Webservice\Transaction as WsTransaction;
@@ -32,18 +32,18 @@ class Redsys extends CreditCardAbstract
     private $client;
 
     /**
-     * @param MethodConfig $config
+     * @param Method $method
      */
-    public function __construct(MethodConfig $config){
+    public function __construct(Method $method){
 
-        parent::__construct($config);
+        parent::__construct($method);
 
-        $this->client = new WsClient($config->getEnvironment());
+        $this->client = new WsClient($method->getEnvironment());
 
         $this->merchant = new WsMerchant(
-            $config->getMerchant(),
-            $config->getSecretKey(),
-            $config->getTerminal()
+            $method->getMerchant(),
+            $method->getSecretKey(),
+            $method->getTerminal()
         );
 
     }
@@ -51,7 +51,7 @@ class Redsys extends CreditCardAbstract
     /**
      * @param \Ilis\Bundle\PaymentBundle\Entity\Transaction\CreditCard $transaction
      */
-    public function capture(CrediCardTranscation $transaction){
+    public function capture(CreditCardTransaction $transaction){
 
         if (!is_numeric($transaction->getAmount()) || $transaction->getAmount() <= 0)
             throw new Exception("Invalid amount");
@@ -100,28 +100,28 @@ class Redsys extends CreditCardAbstract
     /**
      * @param \Ilis\Bundle\PaymentBundle\Entity\Transaction\CreditCard $transaction
      */
-    public function authorize(CrediCardTranscation $transaction){
+    public function authorize(CreditCardTransaction $transaction){
         // TODO:
     }
 
     /**
      * @param \Ilis\Bundle\PaymentBundle\Entity\Transaction\CreditCard $transaction
      */
-    public function void (CrediCardTranscation $transaction){
+    public function void (CreditCardTransaction $transaction){
         // TODO:
     }
 
     /**
      * @param \Ilis\Bundle\PaymentBundle\Entity\Transaction\CreditCard $transaction
      */
-    public function fulfill(CrediCardTranscation $transaction){
+    public function fulfill(CreditCardTransaction $transaction){
         // TODO:
     }
 
     /**
      * @param \Ilis\Bundle\PaymentBundle\Entity\Transaction\CreditCard $transaction
      */
-    public function cancel(CrediCardTranscation $transaction){
+    public function cancel(CreditCardTransaction $transaction){
         // TODO:
     }
 
