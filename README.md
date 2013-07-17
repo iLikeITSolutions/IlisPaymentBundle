@@ -53,10 +53,8 @@ We plan to create a Command to install the bundle that will include creating the
 Since this is still not available, please follow the next steps to update the database
 
 ``` bash
+
   $ php app/console doctrine:schema:update
-  $ php app/console doctrine:fix:load \
-    --append \
-    --fixtures vendor/ilis/payment-bundle/Ilis/Bundle/PaymentBundle/Provider/Redsys/DataFixtures/ORM
 
 ```
 
@@ -197,7 +195,7 @@ Here is how you the configuration of you *config.yml* should look like if you wa
 
 ``` yml
 ilis_payment:
-    transaction_identifier_prefix: "LOCAL"
+    transaction_identifier_suffix: "LOCAL"
     
 ```
 
