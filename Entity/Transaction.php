@@ -207,18 +207,6 @@ class Transaction
 
     }
 
-    /*
-    public function __clone()
-    {
-        if (null !== $this->id)
-        {
-            $this->id = null;
-            $this->identifier = null;
-            $this->status = null;
-        }
-    }
-    */
-
     /**
      * Get Identifier
      *
