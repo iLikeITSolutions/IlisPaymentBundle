@@ -62,37 +62,51 @@ Since this is still not available, please follow the next steps to update the da
 
 ### Configure the Payment Methods
 
-The only payment method available so far is the "Redsys (Webservice)". In order to use it you have to add
-your configuration for this method. 
+The available payments methods can be enabled and configured editing the *methods* section of the bundle's configuration.
 
-``` sql
-    INSERT INTO ilis_payment_method_configs (`method_id`, `status`) VALUES (
-        (SELECT id  FROM ilis_payment_methods WHERE code = 'redsys-webservice'),
-    	1
-    )
+In order to use the bundle you have to configure at least one payment method. 
+So far the only available method is *redsys_webservice*.
+
+Here is an example configuration:
+
+``` yaml
+
+ilis_payment:
+    methods:
+        redsys_webservice:
+           merchant: <your_merchant_id>
+           secret_key: <your_secret_key>
+           terminal: <your_terminal>
+           environment: "testing"
 ```
 
-The Redsys method requires 4 attributes to be configured (merchant, terminal, secretKey, environment)
+This makes the *redsys_webservice* method available to be used in your application.
+Possible values for the environment parameter are: "testing", "integration", "production", being "production" the default value.
 
-Here is an example on how configure the merchant attribute for your newly created configuration
+Of course you can always dump the configuration reference and get more info about the default/required paramenters using your application console 
 
-``` sql
-    INSERT INTO ilis_payment_method_config_attributes (
-        `attribute_id`, 
-    	`config_id`, 
-    	`value`
-    )
-    VALUES (
-    	(SELECT id FROM ilis_payment_method_attributes WHERE name = 'merchant' AND method_id = (SELECT id FROM ilis_payment_methods WHERE code = 'redsys-webservice')),
-    	(SELECT id FROM ilis_payment_method_configs WHERE method_id = (SELECT id FROM ilis_payment_methods WHERE code = 'redsys-webservice')),
-    	<your-merchant-id>
-    )
+``` bash
+
+php app/console config:dump-reference IlisPaymentBundle
+
 ```
 
-Where "your-merchant-id" is the value that the Bank will provide you together with the other attributes' values.
-The others attributes can be configured in the same way, just change the attribute name an value accordingly.
+Even though it doens't make much sense now that only one payment method is available, but keep in mind that already configured payment methods can be disabled in two ways:
 
-The possible values for environment are "testing", "integration", "production"
+* By removing the corresponding node from the methods section
+* setting the *enabled* parameter to false. This is particulary useful if you want temporary disable the method but keep the configuration value to re-enable later.
+
+``` yaml 
+
+ilis_payment:
+    methods:
+        redsys_webservice:
+           enabled: false
+           merchant: <your_merchant_id>
+           secret_key: <your_secret_key>
+           terminal: <your_terminal>
+           environment: testing
+```
 
 
 ## Usage
@@ -122,7 +136,7 @@ Here is an example of a typical usage in a Controller to process a CreditCard AU
     // Retrieve available payment methods
     $methods = $manager->getPaymentMethods(true);
     // Since we only have one method integrated, just use that
-    $method = array_shift($methods);
+    $method = $methods->first();
 
     /** @var CreditCardTransactoin  */
     $transaction = new CreditCardTransaction;
@@ -194,6 +208,7 @@ ilis_payment:
 During the transaction processing there are couple of events that are fired: 
 
 * ilis.payment.transaction.created
+* ilis.payment.transaction.updated
 * ilis.payment.transaction.processed
 
 This allow you to register listeners for these events. Here is some example code on how to do that in your application.
