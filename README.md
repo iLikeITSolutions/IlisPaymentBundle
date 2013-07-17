@@ -93,7 +93,7 @@ php app/console config:dump-reference IlisPaymentBundle
 
 Even though it doens't make much sense now that only one payment method is available, but keep in mind that already configured payment methods can be disabled in two ways:
 
-* By removing the corresponding node from the methods sections
+* By removing the corresponding node from the methods section
 * setting the *enabled* parameter to false. This is particulary useful if you want temporary disable the method but keep the configuration value to re-enable later.
 
 ``` yaml 
@@ -208,6 +208,7 @@ ilis_payment:
 During the transaction processing there are couple of events that are fired: 
 
 * ilis.payment.transaction.created
+* ilis.payment.transaction.updated
 * ilis.payment.transaction.processed
 
 This allow you to register listeners for these events. Here is some example code on how to do that in your application.
