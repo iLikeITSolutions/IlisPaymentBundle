@@ -67,9 +67,9 @@ class Transaction
     private $amount;
 
     /**
-     * @var Method
+     * @var string
      *
-     * @ORM\ManyToOne(targetEntity="Method")
+     * @ORM\Column(type="string")
      */
     private $method;
 
@@ -118,10 +118,10 @@ class Transaction
     /**
      * Set method
      *
-     * @param \Ilis\Bundle\PaymentBundle\Entity\Method $method
+     * @param string $method
      * @return Transaction
      */
-    public function setMethod(\Ilis\Bundle\PaymentBundle\Entity\Method $method = null)
+    public function setMethod($method)
     {
         $this->method = $method;
 
@@ -131,7 +131,7 @@ class Transaction
     /**
      * Get method
      *
-     * @return \Ilis\Bundle\PaymentBundle\Entity\Method
+     * @return string
      */
     public function getMethod()
     {

@@ -22,7 +22,7 @@ class Method
     private $type;
 
     /**
-     * @ORM\Column(type="string", nullable=false)
+     * @var string
      */
     private $code;
 
@@ -77,9 +77,8 @@ class Method
     }
 
     /**
-     * Add attributes
-     *
-     * @param Ilis\Bundle\PaymentBundle\Entity\MethodAttribute $attributes
+     * @param $key
+     * @param $value
      */
     public function addAttribute($key, $value)
     {
