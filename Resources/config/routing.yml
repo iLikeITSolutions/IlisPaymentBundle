@@ -1,3 +1,3 @@
 ilis_payment_paypal_buynow:
     pattern: /paypal/buynow
-    defaults: { _controller: IlisPaymentBundle:Paypal:buynow }
+    defaults: { _controller: IlisPaymentBundle:Paypal/PaymentsStandard:buynow }
