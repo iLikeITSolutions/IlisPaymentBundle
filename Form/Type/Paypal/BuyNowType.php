@@ -16,7 +16,7 @@ use Symfony\Component\Form\FormEvent;
 use Ilis\Bundle\PaymentBundle\Exception\Exception;
 use Ilis\Bundle\PaymentBundle\Provider\Paypal\PaymentsStandard\Button\ButtonAbstract;
 
-class BuyNow extends AbstractType
+class BuyNowType extends AbstractType
 {
 
     /**
@@ -48,7 +48,7 @@ class BuyNow extends AbstractType
                 'hidden',
                 $button->getBn()
             ));
-            
+
         });
     }
 
