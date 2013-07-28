@@ -15,30 +15,27 @@ class Buynow extends ButtonAbstract
     /**
      * @var string
      */
-    private $itemName;
+    protected $itemName;
 
     /**
      * @var string
      */
-    private $itemNumber;
+    protected $itemNumber;
 
     /**
      * @var integer
      */
-    private $quantity;
+    protected $quantity;
 
     /**
      * @var string
      */
-    private $currencyCode;
-
+    protected $currencyCode;
 
     /**
      * @var float
      */
-    private $amount;
-
-
+    protected $amount;
 
     /**
      * Button Constructor
@@ -134,7 +131,5 @@ class Buynow extends ButtonAbstract
     {
         return $this->amount;
     }
-
-
 
 }

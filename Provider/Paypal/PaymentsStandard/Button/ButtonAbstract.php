@@ -15,12 +15,12 @@ abstract class ButtonAbstract
     /**
      * @var string
      */
-    private $cmd;
+    protected $cmd;
 
     /**
      * @var string
      */
-    private $bn;
+    protected $bn;
 
     /**
      * @return string
