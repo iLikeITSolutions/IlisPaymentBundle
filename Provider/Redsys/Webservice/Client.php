@@ -39,9 +39,12 @@ class Client extends \Zend\Soap\Client
      */
     public function __construct($environment = self::ENV_PRODUCTION){
 
+        $context = stream_context_create(array('ssl' => array('ciphers' => 'RC4-SHA')));
+
         parent::__construct(
             $this->wsdls[$environment], array(
-            'soap_version' => SOAP_1_1
+            'soap_version' => SOAP_1_1,
+            'stream_context'    => $context
         ));
 
     }
