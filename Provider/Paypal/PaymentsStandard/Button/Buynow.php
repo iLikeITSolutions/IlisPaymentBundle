@@ -33,7 +33,6 @@ class BuyNow extends ButtonAbstract
      * @var integer
      *
      * @Assert\NotBlank()
-     * @Assert\Type(type = "integer")
      *
      */
     protected $quantity;
@@ -51,7 +50,6 @@ class BuyNow extends ButtonAbstract
      * @var float
      *
      * @Assert\NotBlank()
-     * @Assert\Type(type = "float")
      * @Assert\Range(min = "0.1")
      */
     protected $amount;
