@@ -14,6 +14,7 @@ use Symfony\Component\EventDispatcher\ContainerAwareEventDispatcher;
 use Ilis\Bundle\PaymentBundle\Entity\Transaction;
 use Ilis\Bundle\PaymentBundle\Entity\Method;
 use Ilis\Bundle\PaymentBundle\Entity\Transaction\CreditCard as CreditCardTransaction;
+use Ilis\Bundle\PaymentBundle\Entity\Transaction\Paypal as PaypalTransaction;
 use Ilis\Bundle\PaymentBundle\Exception\Exception;
 use Ilis\Bundle\PaymentBundle\Processor\ProcessorFactory;
 use Ilis\Bundle\PaymentBundle\PaymentEvents;
@@ -131,11 +132,11 @@ class Manager
 
     public function initPaypalBuyNowTransaction(BuyNow $button)
     {
-        if (!$this->methodIsAvailable('paypal_payments_standards'))
+        if (!$this->methodIsAvailable('paypal_payments_standard'))
             throw new Exception('Paypal Payments Standards is not available');
 
         $filtered = $this->methods->filter(function($method){
-           return $method->getCode() === 'paypal_payments_standards';
+            return $method->getCode() === 'paypal_payments_standard';
         });
 
         if ($filtered->count() !== 1)
@@ -143,8 +144,14 @@ class Manager
 
         $method = $filtered->current();
 
+        $transaction  = new PaypalTransaction;
+        $transaction->setType(PaypalTransaction::TYPE_BUYNOW);
+        $transaction->setAmount($button->getAmount());
 
+        $this->em->persist($transaction);
+        $this->em->flush();
 
+        // TODO: Build Redirect URL
 
     }
 
