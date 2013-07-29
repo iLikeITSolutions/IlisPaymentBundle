@@ -156,6 +156,7 @@ class Manager
         $transaction->setType(PaypalTransaction::TYPE_BUYNOW);
         $transaction->setAmount($button->getAmount());
         $transaction->setCmd($button->getCmd());
+        $transaction->setBn($button->getBn());
         $transaction->setCurrencyCode($button->getCurrencyCode());
         $transaction->setQuantity($button->getQuantity());
         $transaction->setItemName($button->getItemName());
