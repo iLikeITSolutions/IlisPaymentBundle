@@ -75,7 +75,7 @@ class BuyNowType extends AbstractType
             $form->add($factory->createNamed(
                 'amount',
                 'hidden',
-                number_format((float) $button->getAmount(), 2, '.')
+                number_format((float) $button->getAmount(), 2)
             ));
 
         });
