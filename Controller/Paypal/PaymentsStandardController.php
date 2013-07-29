@@ -14,6 +14,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Ilis\Bundle\PaymentBundle\Form\Type\Paypal\BuyNowType;
 use Ilis\Bundle\PaymentBundle\Provider\Paypal\PaymentsStandard\Button\Buynow;
 use Ilis\Bundle\PaymentBundle\Exception\Exception;
+use Ilis\Bundle\PaymentBundle\Service\Manager;
 
 class PaymentsStandardController extends Controller
 {
@@ -34,6 +35,11 @@ class PaymentsStandardController extends Controller
             ));
 
         $button = $form->getData();
+
+        /** @var $manager Manager */
+        $manager = $this->get('ilis.payment.manager');
+        $manager->initPaypalBuyNowTransaction($button);
+
 
     }
 

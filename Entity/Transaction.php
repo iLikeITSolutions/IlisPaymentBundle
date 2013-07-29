@@ -18,7 +18,8 @@ use Ilis\Bundle\PaymentBundle\Exception\Exception;
  * @ORM\InheritanceType("JOINED")
  * @ORM\DiscriminatorColumn(name="method_type", type="string")
  * @ORM\DiscriminatorMap({
-        "cc" = "Ilis\Bundle\PaymentBundle\Entity\Transaction\CreditCard",
+        "cc"      = "Ilis\Bundle\PaymentBundle\Entity\Transaction\CreditCard",
+ *      "paypal"  = "Ilis\Bundle\PaymentBundle\Entity\Transaction\Paypal",
    })
  * @ORM\HasLifecycleCallbacks()
  */
