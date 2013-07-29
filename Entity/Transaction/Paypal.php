@@ -59,7 +59,7 @@ class Paypal extends Transaction
     /**
      * @var string
      *
-     * @ORM\Column(type="string", length=32, nullable=true)
+     * @ORM\Column(name="currency_code", type="string", length=32, nullable=true)
      *
      */
     private  $currencyCode;

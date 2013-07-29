@@ -11,6 +11,7 @@ namespace Ilis\Bundle\PaymentBundle\Controller\Paypal;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Ilis\Bundle\PaymentBundle\Form\Type\Paypal\BuyNowType;
 use Ilis\Bundle\PaymentBundle\Provider\Paypal\PaymentsStandard\Button\Buynow;
 use Ilis\Bundle\PaymentBundle\Exception\Exception;
@@ -38,7 +39,9 @@ class PaymentsStandardController extends Controller
 
         /** @var $manager Manager */
         $manager = $this->get('ilis.payment.manager');
-        $manager->initPaypalBuyNowTransaction($button);
+
+        $url = $manager->initPaypalBuyNowTransaction($button);
+        return new RedirectResponse($url);
 
     }
 

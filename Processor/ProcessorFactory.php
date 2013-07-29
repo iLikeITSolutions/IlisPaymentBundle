@@ -20,7 +20,7 @@ class ProcessorFactory
      * @return ProcessorAbstract
      * @throws \Ilis\Bundle\PaymentBundle\Exception\Exception
      */
-    public static function makeProcessor(Method $method)
+    public static function makeProcessor(Method $method, $router)
     {
         $code = $method->getCode();
 
@@ -30,7 +30,7 @@ class ProcessorFactory
                 $processor = new CreditCard\Redsys($method);
                 break;
             case Method::CODE_PAYPAL_PAYMENTS_STANDARDS:
-                $processor = new Paypal\PaymentsStandard($method);
+                $processor = new Paypal\PaymentsStandard($method, $router);
                 break;
             default:
                 throw new Exception(sprintf(

@@ -1,3 +1,10 @@
 ilis_payment_paypal_buynow:
     pattern: /paypal/buynow
     defaults: { _controller: IlisPaymentBundle:Paypal/PaymentsStandard:buynow }
+    methods:  [POST]
+
+ilis_payment_paypal_callback:
+  pattern: /paypal/callback-handler
+    defaults: { _controller: IlisPaymentBundle:Paypal/PaymentsStandard:callbackHandler }
+    methods:  [POST]
+

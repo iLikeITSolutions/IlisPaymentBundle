@@ -22,6 +22,7 @@ use Ilis\Bundle\PaymentBundle\Event\TransactionProcessedEvent;
 use Doctrine\Common\Collections\ArrayCollection;
 use Ilis\Bundle\PaymentBundle\Provider\Paypal\PaymentsStandard\Button\BuyNow;
 use Monolog\Logger;
+use Symfony\Bundle\FrameworkBundle\Routing\Router;
 
 class Manager
 {
@@ -36,6 +37,11 @@ class Manager
     protected $dispatcher;
 
     /**
+     * @var Router
+     */
+    protected $router;
+
+    /**
      * @var ArrrayCollection
      */
     protected $methods;
@@ -43,11 +49,12 @@ class Manager
     /**
      * @param \Doctrine\ORM\EntityManager $em
      */
-    public function __construct(EntityManager $em, ContainerAwareEventDispatcher $dispatcher, Logger $logger)
+    public function __construct(EntityManager $em, ContainerAwareEventDispatcher $dispatcher, Router $router, Logger $logger)
     {
         $this->em = $em;
         $this->dispatcher = $dispatcher;
         $this->methods = new ArrayCollection();
+        $this->router = $router;
         $this->logger = $logger;
     }
 
@@ -217,7 +224,7 @@ class Manager
      */
     protected function getProcessor(Method $method)
     {
-        $processor = ProcessorFactory::makeProcessor($method);
+        $processor = ProcessorFactory::makeProcessor($method, $this->router);
 
         if (!is_subclass_of($processor, 'Ilis\Bundle\PaymentBundle\Processor\ProcessorAbstract'))
             throw new Exception(sprintf(

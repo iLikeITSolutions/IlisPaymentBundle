@@ -45,8 +45,8 @@ class PaymentsStandard extends ProcessorAbstract
         $parameters['cmd']              = $transaction->getCmd();
         $parameters['bn']               = $transaction->getBn();
         $parameters['currency_code']    = $transaction->getCurrencyCode();
-        $parameters['business'] = $this->method->getBusiness();
-        $parameters['amount']   = $transaction->getAmount();
+        $parameters['business']         = $this->method->getBusiness();
+        $parameters['amount']           = $transaction->getAmount();
 
         if ($transaction->getItemName())
             $parameters['item_name'] = $transaction->getItemName();
@@ -54,6 +54,12 @@ class PaymentsStandard extends ProcessorAbstract
             $parameters['item_number'] = $transaction->getItemNumber();
         if ($transaction->getQuantity())
             $parameters['quantity'] = $transaction->getQuantity();
+
+        $parameters['notify_url'] = $this->router->generate(
+            'ilis_payment_paypal_callback',
+            null,
+            true
+        );
 
         if ($this->method->getSandbox() === true)
             $baseUrl = 'http://www.sandbox.paypal.com/cgi-bin/webscr';
