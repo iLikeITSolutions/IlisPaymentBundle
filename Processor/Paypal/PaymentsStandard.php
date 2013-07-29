@@ -24,6 +24,7 @@ class PaymentsStandard extends ProcessorAbstract
         switch ($transaction->getType())
         {
             case PaypalTransaction::TYPE_BUYNOW:
+                return $this->buildBuyNowUrl($transaction);
                 break;
             default:
                 throw new Exception(sprintf(
@@ -42,7 +43,7 @@ class PaymentsStandard extends ProcessorAbstract
         $parameters = array ();
 
         $parameters['business'] = $this->method->getBusiness();
-        $parameters['amount'] = $transaction->getAmount();
+        $parameters['amount']   = $transaction->getAmount();
 
         if ($this->method->getSandbox() === true)
             $baseUrl = 'http://www.sandbox.paypal.com/cgi-bin/webscr';

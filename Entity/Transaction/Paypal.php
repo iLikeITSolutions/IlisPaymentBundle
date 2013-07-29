@@ -21,4 +21,44 @@ class Paypal extends Transaction
 {
     const TYPE_BUYNOW = 'paypal_buynow';
 
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="string")
+     */
+    private $cmd;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="string", length=127)
+     */
+    private $itemName;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="string", length=127)
+     */
+    private $itemNumber;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(type="smallint")
+     */
+    private $quantity;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="string", length=32)
+     *
+     */
+    private  $currencyCode;
+
+
+
+
+
 }

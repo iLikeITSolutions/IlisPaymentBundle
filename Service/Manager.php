@@ -155,11 +155,11 @@ class Manager
         $transaction  = new PaypalTransaction;
         $transaction->setType(PaypalTransaction::TYPE_BUYNOW);
         $transaction->setAmount($button->getAmount());
+        $transaction->setMethod($method);
 
         $this->em->persist($transaction);
         $this->em->flush();
 
-        // TODO: Build Redirect URL
         /** @var $processor \Ilis\Bundle\PaymentBundle\Processor\Paypal\PaymentStandard */
         $processor = $this->getProcessor($method);
 
