@@ -19,6 +19,7 @@ use Ilis\Bundle\PaymentBundle\Processor\ProcessorFactory;
 use Ilis\Bundle\PaymentBundle\PaymentEvents;
 use Ilis\Bundle\PaymentBundle\Event\TransactionProcessedEvent;
 use Doctrine\Common\Collections\ArrayCollection;
+use Ilis\Bundle\PaymentBundle\Provider\Paypal\PaymentsStandard\Button\BuyNow;
 use Monolog\Logger;
 
 class Manager
@@ -66,13 +67,15 @@ class Manager
     }
 
     /**
-     * @param \Ilis\Bundle\PaymentBundle\Entity\Method $method
+     * @param mixed $method
      * @return bool
      */
-    public function methodIsAvailable(Method $method)
+    public function methodIsAvailable($method)
     {
         foreach ($this->methods as $availableMethod)
-            if ($availableMethod->getCode() === $method->getCode())
+            if ($method instanceof Method && $availableMethod->getCode() === $method->getCode())
+                return true;
+            elseif (is_string($method) && $availableMethod->getCode() === $method)
                 return true;
 
         return false;
@@ -124,6 +127,25 @@ class Manager
             PaymentEvents::TRANSACTION_PROCESSED,
             new TransactionProcessedEvent($transaction)
         );
+    }
+
+    public function initPaypalBuyNowTransaction(BuyNow $button)
+    {
+        if ($this->methodIsAvailable('paypal_payments_standards'))
+            throw new Exception('Paypal Payments Standards is not available');
+
+        $filtered = $this->methods->filter(function($method){
+           return $method->getCode() === 'paypal_payments_standards';
+        });
+
+        if ($filtered->count() !== 1)
+            throw new Exception('Unable to load Method');
+
+        $method = $filtered->current();
+
+
+
+
     }
 
     /**
