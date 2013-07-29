@@ -25,13 +25,13 @@ class BuyNow extends ButtonAbstract
     /**
      * @var string
      *
-     * @Assert\NotBlank()
      * @Assert\Length(max = "127")
      */
     protected $itemNumber;
 
     /**
      * @var integer
+     *
      * @Assert\NotBlank()
      * @Assert\Type(type = "integer")
      *
@@ -40,18 +40,26 @@ class BuyNow extends ButtonAbstract
 
     /**
      * @var string
+     *
+     * @Assert\NotBlank()
+     * @Assert\Choice(choices = {"EUR"})
+     *
      */
     protected $currencyCode;
 
     /**
      * @var float
+     *
+     * @Assert\NotBlank()
+     * @Assert\Type(type = "float")
+     * @Assert\Range(min = "0.1")
      */
     protected $amount;
 
     /**
      * Button Constructor
      */
-    public function __construct($country = 'ES')
+    public function __construct($country = ButtonAbstract::COUNTRY_DEFAULT)
     {
         $this->cmd = ButtonAbstract::CMD_XCLICK;
         $this->bn = $this->buildBn('BuyNow', $country);

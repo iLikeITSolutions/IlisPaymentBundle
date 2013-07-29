@@ -12,6 +12,9 @@ namespace Ilis\Bundle\PaymentBundle\Provider\Paypal\PaymentsStandard\Button;
 abstract class ButtonAbstract
 {
     const CMD_XCLICK = '_xclick';
+
+    const COUNTRY_DEFAULT = 'ES';
+    const CURRENCY_DEFAULT = 'EUR';
     /**
      * @var string
      */

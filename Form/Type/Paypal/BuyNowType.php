@@ -14,6 +14,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormEvent;
 use Ilis\Bundle\PaymentBundle\Exception\Exception;
+use Ilis\Bundle\PaymentBundle\Provider\Paypal\PaymentsStandard\Button\BuyNow;
 use Ilis\Bundle\PaymentBundle\Provider\Paypal\PaymentsStandard\Button\ButtonAbstract;
 
 class BuyNowType extends AbstractType
@@ -30,7 +31,7 @@ class BuyNowType extends AbstractType
 
             $button = $event->getData();
 
-            if (!$button instanceof ButtonAbstract)
+            if (!$button instanceof BuyNow)
                 throw new Exception('Invalid data object');
 
             $form = $event->getForm();
@@ -54,6 +55,27 @@ class BuyNowType extends AbstractType
                 'item_name',
                 'hidden',
                 $button->getItemName()
+            ));
+
+            // Quantity
+            $form->add($factory->createNamed(
+                'quantity',
+                'hidden',
+                $button->getQuantity() !== null ? $button->getQuantity() : 1
+            ));
+
+            // CurrencyCode
+            $form->add($factory->createNamed(
+                'currency_code',
+                'hidden',
+                $button->getCurrencyCode() !== null ? $button->getCurrencyCode() : ButtonAbstract::CURRENCY_DEFAULT
+            ));
+
+            // Amount
+            $form->add($factory->createNamed(
+                'amount',
+                'hidden',
+                number_format((float) $button->getAmount(), 2, '.')
             ));
 
         });

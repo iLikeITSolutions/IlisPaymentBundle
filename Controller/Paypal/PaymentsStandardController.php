@@ -13,6 +13,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Ilis\Bundle\PaymentBundle\Form\Type\Paypal\BuyNowType;
 use Ilis\Bundle\PaymentBundle\Provider\Paypal\PaymentsStandard\Button\Buynow;
+use Ilis\Bundle\PaymentBundle\Exception\Exception;
 
 class PaymentsStandardController extends Controller
 {
@@ -27,7 +28,10 @@ class PaymentsStandardController extends Controller
         $form->bind($request);
 
         if (!$form->isValid())
-            throw new Exception('Invalid Paypal Button');
+            throw new Exception(sprintf(
+                'Invalid Paypal Button (%s error/s)',
+                count($form->getErrors())
+            ));
 
         $button = $form->getData();
 
