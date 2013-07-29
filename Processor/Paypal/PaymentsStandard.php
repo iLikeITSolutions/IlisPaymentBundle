@@ -57,7 +57,7 @@ class PaymentsStandard extends ProcessorAbstract
 
         $parameters['notify_url'] = $this->router->generate(
             'ilis_payment_paypal_callback',
-            null,
+            array(),
             true
         );
 
