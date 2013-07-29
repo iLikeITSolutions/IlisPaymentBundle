@@ -131,7 +131,7 @@ class Manager
 
     public function initPaypalBuyNowTransaction(BuyNow $button)
     {
-        if ($this->methodIsAvailable('paypal_payments_standards'))
+        if (!$this->methodIsAvailable('paypal_payments_standards'))
             throw new Exception('Paypal Payments Standards is not available');
 
         $filtered = $this->methods->filter(function($method){
