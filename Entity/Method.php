@@ -15,6 +15,7 @@ class Method
 {
     const TYPE_CREDITCARD = 'cc';
     const CODE_REDSYS_WEBSERVICE = 'redsys_webservice';
+    const CODE_PAYPAL_PAYMENTS_STANDARDS = 'paypal_payments_standard';
 
     /**
      * @var string

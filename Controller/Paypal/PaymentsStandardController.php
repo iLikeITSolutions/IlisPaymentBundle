@@ -40,7 +40,6 @@ class PaymentsStandardController extends Controller
         $manager = $this->get('ilis.payment.manager');
         $manager->initPaypalBuyNowTransaction($button);
 
-
     }
 
     /**

@@ -29,6 +29,9 @@ class ProcessorFactory
             case Method::CODE_REDSYS_WEBSERVICE:
                 $processor = new CreditCard\Redsys($method);
                 break;
+            case Method::CODE_PAYPAL_PAYMENTS_STANDARDS:
+                $processor = new Paypal\PaymentsStandard($method);
+                break;
             default:
                 throw new Exception(sprintf(
                     'Unhandled method code "%s". Cannot instantiate Processor',

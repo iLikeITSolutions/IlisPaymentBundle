@@ -130,17 +130,25 @@ class Manager
         );
     }
 
+    /**
+     * @param \Ilis\Bundle\PaymentBundle\Provider\Paypal\PaymentsStandard\Button\BuyNow $button
+     * @return string
+     * @throws \Ilis\Bundle\PaymentBundle\Exception\Exception
+     */
     public function initPaypalBuyNowTransaction(BuyNow $button)
     {
-        if (!$this->methodIsAvailable('paypal_payments_standard'))
+        if (!$this->methodIsAvailable(Method::CODE_PAYPAL_PAYMENTS_STANDARDS))
             throw new Exception('Paypal Payments Standards is not available');
 
         $filtered = $this->methods->filter(function($method){
-            return $method->getCode() === 'paypal_payments_standard';
+            return $method->getCode() === Method::CODE_PAYPAL_PAYMENTS_STANDARDS;
         });
 
         if ($filtered->count() !== 1)
-            throw new Exception('Unable to load Method');
+            throw new Exception(sprintf(
+                'Unable to load Method "%s"',
+                Method::CODE_PAYPAL_PAYMENTS_STANDARDS
+            ));
 
         $method = $filtered->current();
 
@@ -152,6 +160,11 @@ class Manager
         $this->em->flush();
 
         // TODO: Build Redirect URL
+        /** @var $processor \Ilis\Bundle\PaymentBundle\Processor\Paypal\PaymentStandard */
+        $processor = $this->getProcessor($method);
+
+        $url = $processor->buildUrl($transaction);
+        return $url;
 
     }
 

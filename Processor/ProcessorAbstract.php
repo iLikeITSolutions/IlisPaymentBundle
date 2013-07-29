@@ -16,7 +16,7 @@ abstract class ProcessorAbstract
     /**
      * @var Method
      */
-    private $method;
+    protected $method;
 
     /**
      * @param \Ilis\Bundle\PaymentBundle\Entity\Method $method
