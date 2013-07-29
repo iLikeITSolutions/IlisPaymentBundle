@@ -11,6 +11,8 @@ namespace Ilis\Bundle\PaymentBundle\Controller\Paypal;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
+use Ilis\Bundle\PaymentBundle\Form\Type\Paypal\BuyNowType;
+use Ilis\Bundle\PaymentBundle\Provider\Paypal\PaymentsStandard\Button\Buynow;
 
 class PaymentsStandardController extends Controller
 {
@@ -20,7 +22,15 @@ class PaymentsStandardController extends Controller
      */
     public function buynowAction()
     {
-        return new Response("Buynow!");
+        $request = $this->getRequest();
+        $form = $this->createForm(new BuyNowType(), new Buynow());
+        $form->bind($request);
+
+        if (!$form->isValid())
+            throw new Exception('Invalid Paypal Button');
+
+        $button = $form->getData();
+
     }
 
     /**

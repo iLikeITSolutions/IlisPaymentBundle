@@ -49,6 +49,13 @@ class BuyNowType extends AbstractType
                 $button->getBn()
             ));
 
+            // ItemName
+            $form->add($factory->createNamed(
+                'item_name',
+                'hidden',
+                $button->getItemName()
+            ));
+
         });
     }
 

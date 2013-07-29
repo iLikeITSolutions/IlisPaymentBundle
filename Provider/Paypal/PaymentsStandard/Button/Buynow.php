@@ -9,21 +9,32 @@
 
 namespace Ilis\Bundle\PaymentBundle\Provider\Paypal\PaymentsStandard\Button;
 
-class Buynow extends ButtonAbstract
+use Symfony\Component\Validator\Constraints as Assert;
+
+class BuyNow extends ButtonAbstract
 {
 
     /**
      * @var string
+     *
+     * @Assert\NotBlank()
+     * @Assert\Length(max = "127")
      */
     protected $itemName;
 
     /**
      * @var string
+     *
+     * @Assert\NotBlank()
+     * @Assert\Length(max = "127")
      */
     protected $itemNumber;
 
     /**
      * @var integer
+     * @Assert\NotBlank()
+     * @Assert\Type(type = "integer")
+     *
      */
     protected $quantity;
 
