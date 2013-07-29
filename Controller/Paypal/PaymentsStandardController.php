@@ -50,6 +50,9 @@ class PaymentsStandardController extends Controller
      */
     public function callbackHandlerAction()
     {
+        $logger = $this->get('logger');
+        $request = $this->getRequest();
+        $logger->debug(var_export($request->request->all(), true));
         return new Response ('Callback Handler');
     }
 

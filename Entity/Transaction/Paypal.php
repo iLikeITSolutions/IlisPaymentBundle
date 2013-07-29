@@ -59,6 +59,13 @@ class Paypal extends Transaction
     /**
      * @var string
      *
+     * @ORM\Column(type="string", nullable=true)
+     */
+    private $custom;
+
+    /**
+     * @var string
+     *
      * @ORM\Column(name="currency_code", type="string", length=32, nullable=true)
      *
      */
@@ -170,6 +177,24 @@ class Paypal extends Transaction
     public function getCurrencyCode()
     {
         return $this->currencyCode;
+    }
+
+    /**
+     * @param $custom
+     * @return Paypal
+     */
+    public function setCustom($custom)
+    {
+        $this->custom = $custom;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCustom()
+    {
+        return $this->custom;
     }
 
 

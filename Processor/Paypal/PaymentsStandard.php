@@ -61,6 +61,8 @@ class PaymentsStandard extends ProcessorAbstract
             true
         );
 
+        $parameters['custom'] = $transaction->getIdentifier();
+
         if ($this->method->getSandbox() === true)
             $baseUrl = 'http://www.sandbox.paypal.com/cgi-bin/webscr';
         else
