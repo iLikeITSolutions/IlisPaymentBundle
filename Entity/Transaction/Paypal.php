@@ -24,7 +24,7 @@ class Paypal extends Transaction
     /**
      * @var string
      *
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", length=32)
      */
     private $cmd;
 
@@ -33,32 +33,144 @@ class Paypal extends Transaction
      *
      * @ORM\Column(type="string", length=127)
      */
+    private $bn;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="string", length=127, nullable=true)
+     */
     private $itemName;
 
     /**
      * @var string
      *
-     * @ORM\Column(type="string", length=127)
+     * @ORM\Column(type="string", length=127, nullable=true)
      */
     private $itemNumber;
 
     /**
      * @var integer
      *
-     * @ORM\Column(type="smallint")
+     * @ORM\Column(type="smallint", nullable=true)
      */
     private $quantity;
 
     /**
      * @var string
      *
-     * @ORM\Column(type="string", length=32)
+     * @ORM\Column(type="string", length=32, nullable=true)
      *
      */
     private  $currencyCode;
 
+    /**
+     * @param $cmd
+     * @return Paypal
+     */
+    public function setCmd($cmd)
+    {
+        $this->cmd = $cmd;
+        return $this;
+    }
 
+    /**
+     * @return string
+     */
+    public function getCmd()
+    {
+        return $this->cmd;
+    }
 
+    /**
+     * @param $bn
+     * @return Paypal
+     */
+    public function setBn($bn)
+    {
+        $this->bn = $bn;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getBn()
+    {
+        return $this->bn;
+    }
+
+    /**
+     * @param $itemName
+     * @return Paypal
+     */
+    public function setItemName($itemName)
+    {
+        $this->itemName = $itemName;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getItemName()
+    {
+        return $this->itemName;
+    }
+
+    /**
+     * @param $itemNumber
+     * @return Paypal
+     */
+    public function setItemNumber($itemNumber)
+    {
+        $this->itemNumber = $itemNumber;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getItemNumber()
+    {
+        return $this->itemNumber;
+    }
+
+    /**
+     * @param $quantity
+     * @return Paypal
+     */
+    public function setQuantity($quantity)
+    {
+        $this->quantity = $quantity;
+        return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getQuantity()
+    {
+        return $this->quantity;
+    }
+
+    /**
+     * @param $currency
+     * @return Paypal
+     */
+    public function setCurrencyCode($currency)
+    {
+        $this->currencyCode = $currency;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCurrencyCode()
+    {
+        return $this->currencyCode;
+    }
 
 
 }

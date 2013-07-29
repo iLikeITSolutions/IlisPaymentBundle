@@ -155,6 +155,11 @@ class Manager
         $transaction  = new PaypalTransaction;
         $transaction->setType(PaypalTransaction::TYPE_BUYNOW);
         $transaction->setAmount($button->getAmount());
+        $transaction->setCmd($button->getCmd());
+        $transaction->setCurrencyCode($button->getCurrencyCode());
+        $transaction->setQuantity($button->getQuantity());
+        $transaction->setItemName($button->getItemName());
+        $transaction->setItemNumber($button->getItemNumber());
         $transaction->setMethod($method);
 
         $this->em->persist($transaction);

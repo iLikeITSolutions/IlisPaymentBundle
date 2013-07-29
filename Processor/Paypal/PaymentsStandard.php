@@ -42,8 +42,18 @@ class PaymentsStandard extends ProcessorAbstract
     {
         $parameters = array ();
 
+        $parameters['cmd']              = $transaction->getCmd();
+        $parameters['bn']               = $transaction->getBn();
+        $parameters['currency_code']    = $transaction->getCurrencyCode();
         $parameters['business'] = $this->method->getBusiness();
         $parameters['amount']   = $transaction->getAmount();
+
+        if ($transaction->getItemName())
+            $parameters['item_name'] = $transaction->getItemName();
+        if ($transaction->getItemNumber())
+            $parameters['item_number'] = $transaction->getItemNumber();
+        if ($transaction->getQuantity())
+            $parameters['quantity'] = $transaction->getQuantity();
 
         if ($this->method->getSandbox() === true)
             $baseUrl = 'http://www.sandbox.paypal.com/cgi-bin/webscr';
