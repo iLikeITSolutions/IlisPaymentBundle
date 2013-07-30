@@ -42,12 +42,14 @@ class PaymentsStandard extends ProcessorAbstract
     {
         $parameters = array ();
 
+        // Standard Variables
         $parameters['cmd']              = $transaction->getCmd();
         $parameters['bn']               = $transaction->getBn();
         $parameters['currency_code']    = $transaction->getCurrencyCode();
         $parameters['business']         = $this->method->getBusiness();
         $parameters['amount']           = $transaction->getAmount();
 
+        // Optional Variables
         if ($transaction->getItemName())
             $parameters['item_name'] = $transaction->getItemName();
         if ($transaction->getItemNumber())
@@ -55,18 +57,39 @@ class PaymentsStandard extends ProcessorAbstract
         if ($transaction->getQuantity())
             $parameters['quantity'] = $transaction->getQuantity();
 
+        // Notifiy Url
         $parameters['notify_url'] = $this->router->generate(
             'ilis_payment_paypal_callback',
             array(),
             true
         );
 
+        // Transaction Identifier
         $parameters['custom'] = $transaction->getIdentifier();
 
+        // Use Sandbox?
         if ($this->method->getSandbox() === true)
             $baseUrl = 'http://www.sandbox.paypal.com/cgi-bin/webscr';
         else
             $baseUrl = 'http://www.paypal.com/cgi-bin/webscr';
+
+        // Return Method
+        $parameters['rm'] = $this->method->getRm();
+
+        // Return
+        $parameters['return'] = $this->router->generate(
+          $this->method->getReturn(),
+          array(),
+          true
+        );
+
+        // Cancel Return
+        $parameters['cancel_return'] = $this->router->generate(
+            $this->method->getCancelReturn(),
+            array(),
+            true
+        );
+
 
         $query = http_build_query($parameters);
 

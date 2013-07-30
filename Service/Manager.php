@@ -228,7 +228,16 @@ class Manager
         {
             case PaypalTransaction::PAYMENT_STATUS_COMPLETED:
 
-                $transaction->setStatus(Transaction::STATUS_SUCCESS);
+                $transaction->setStatus(
+                    Transaction::STATUS_SUCCESS
+                );
+                break;
+            case PaypalTransaction::PAYMENT_STATUS_DENIED:
+            case PaypalTransaction::PAYMENT_STATUS_EXPIRED:
+            case PaypalTransaction::PAYMENT_STATUS_FAILED:
+                $transaction->setStatus(
+                    Transaction::STATUS_ERROR
+                );
                 break;
             default:
                 throw new Exception(sprintf(

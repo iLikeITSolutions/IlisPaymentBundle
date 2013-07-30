@@ -77,7 +77,7 @@ class PaymentsStandardController extends Controller
 
         /** @var $logger \Monolog\Logger */
         $logger = $this->get('logger');
-        $logger->debug(var_export($request->request->all(), true));
+        $logger->debug(var_export$data, true));
 
         return new Response('');
     }
