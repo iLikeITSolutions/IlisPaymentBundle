@@ -117,7 +117,9 @@ class Manager
             case $transaction instanceof CreditCardTransaction:
                $this->processCreditCardTransaction($transaction);
                break;
-
+            case $transaction instanceof PaypalTransaction:
+                $this->processPaypalTransaction($transaction);
+                break;
             default:
                 throw new Exception(sprintf(
                     'Unhandled Transaction class "%s"',
@@ -182,7 +184,7 @@ class Manager
     }
 
     /**
-     * @param Transaction $transaction
+     * @param CreditCardTransaction $transaction
      */
     protected function processCreditCardTransaction(CreditCardTransaction $transaction)
     {
@@ -215,6 +217,26 @@ class Manager
                     $type
                 ));
         }
+    }
+
+    /**
+     * @param PaypalTransaction $transaction
+     */
+    protected function processPaypalTransaction(PaypalTransaction $transaction)
+    {
+        switch ($transaction->getPaymentStatus())
+        {
+            case PaypalTransaction::PAYMENT_STATUS_COMPLETED:
+
+                $transaction->setStatus(Transaction::STATUS_SUCCESS);
+                break;
+            default:
+                throw new Exception(sprintf(
+                    'Unhandled payment status "%s"',
+                    $transaction->getPaymentStatus()
+                ));
+        }
+
     }
 
     /**

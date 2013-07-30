@@ -21,6 +21,17 @@ class Paypal extends Transaction
 {
     const TYPE_BUYNOW = 'paypal_buynow';
 
+    const PAYMENT_STATUS_COMPLETED  = 'Completed';
+    const PAYMENT_STATUS_CREATED    = 'Created';
+    const PAYMENT_STATUS_DENIED     = 'Denied';
+    const PAYMENT_STATUS_EXPIRED    = 'Expired';
+    const PAYMENT_STATUS_FAILED     = 'Failed';
+    const PAYMENT_STATUS_PENDING    = 'Pending';
+    const PAYMENT_STATUS_REFUNDED   = 'Refunded';
+    const PAYMENT_STATUS_REVERSED   = 'Reversed';
+    const PAYMENT_STATUS_PROCESSED  = 'Processed';
+    const PAYMENT_STATUS_VOIDED     = 'Voided';
+
     /**
      * @var string
      *
@@ -70,6 +81,34 @@ class Paypal extends Transaction
      *
      */
     private  $currencyCode;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="txn_type", nullable=true)
+     */
+    private $txnType;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="txn_id", nullable=true)
+     */
+    private $txnId;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="payment_status", nullable=true)
+     */
+    private $paymentStatus;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="raw_data" type="text", nullable=true)
+     */
+    private $rawData;
 
     /**
      * @param $cmd
@@ -195,6 +234,78 @@ class Paypal extends Transaction
     public function getCustom()
     {
         return $this->custom;
+    }
+
+    /**
+     * @param $txnType
+     * @return Paypal
+     */
+    public function setTxnType($txnType)
+    {
+        $this->txnType = $txnType;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getTxnType()
+    {
+        return $this->txnType;
+    }
+
+    /**
+     * @param $txnId
+     * @return Paypal
+     */
+    public function setTxnid($txnId)
+    {
+        $this->txnId = $txnId;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getTxnId()
+    {
+        return $this->txnId;
+    }
+
+    /**
+     * @param $paymentStatus
+     * @return Paypal
+     */
+    public function setPaymentStatus($paymentStatus)
+    {
+        $this->paymentStatus = $paymentStatus;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPaymentStatus()
+    {
+        return $this->paymentStatus;
+    }
+
+    /**
+     * @param $rawData
+     * @return Paypal
+     */
+    public function setRawData($rawData)
+    {
+        $this->rawData = $rawData;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getRawData()
+    {
+        return $this->rawData;
     }
 
 

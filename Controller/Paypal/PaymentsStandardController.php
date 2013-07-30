@@ -67,6 +67,11 @@ class PaymentsStandardController extends Controller
         /** @var $manager \Ilis\Bundle\PaymentBundle\Service\Manager */
         $manager = $this->get('ilis.payment.manager');
 
+        $transaction->setTxnid($data['txn_id']);
+        $transaction->setTxnType($data['txn_type']);
+        $transaction->setPaymentStatus($data['payment_status']);
+        $transaction->setRawData(serialize($data));
+
         // TODO: Fill Transaction Data
         $manager->processTransaction($transaction);
 
