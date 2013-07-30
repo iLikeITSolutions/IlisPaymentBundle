@@ -63,7 +63,9 @@ Since this is still not available, please follow the next steps to update the da
 The available payments methods can be enabled and configured editing the *methods* section of the bundle's configuration.
 
 In order to use the bundle you have to configure at least one payment method. 
-So far the only available method is *redsys_webservice*.
+So far the only available method are *redsys_webservice* and *paypal_payments_standard*
+
+#### Redsys Webservice
 
 Here is an example configuration:
 
@@ -105,6 +107,33 @@ ilis_payment:
            terminal: <your_terminal>
            environment: testing
 ```
+
+#### Paypal Payments Standards
+
+Here is a typical Paypal configuration
+
+``` yaml
+
+ilis_payment:
+    methods:
+        paypal_payments_standard:
+           business: <paypal-merchant-identifier>
+           rm: "0"
+           return: "payment_success"
+           cancel_return: "payment_cancel"
+           sandbox: true
+```
+
+Where
+
+* *business* is the your Paypal Business acccount identifier (you can you the email)
+* *rm* The FORM METHOD used to send data to the URL specified by the return variable. Possible values are:
+    + 0 – all shopping cart payments use the GET method
+    + 1 – the buyer's browser is redirected to the return URL by using the GET method, but no payment variables are included
+    + 2 – the buyer's browser is redirected to the return URL by using the POST method, and all payment variables are included
+* *return* The route to which PayPal redirects buyers' browser after they complete their payments.
+* *cancel_return* A route to which PayPal redirects the buyers' browsers if they cancel checkout before completing their payments.
+* *sandbox* Set this to true if you are testing
 
 
 ## Usage
@@ -175,6 +204,47 @@ Here is an example of a typical usage in a Controller to process a CreditCard AU
     ));
 
 ```
+
+Here an example for a Paypal Buynow Button.
+
+Controller: 
+
+``` php
+
+// ... 
+use Ilis\Bundle\PaymentBundle\Form\Type\Paypal\BuyNowType;
+
+// ... 
+
+$paypalButton = new BuynowButton();
+$paypalButton->setItemName('Test');
+$paypalButton->setItemNumber('0123456');
+$paypalButton->setAmount('2.50');
+$paypalForm = $this->createForm(
+    new BuyNowType(), 
+    $paypalButton
+);
+
+// ... 
+
+return $this->render(
+    'PaymentBundle:Default:index.html.twig', array(
+        'paypalForm' => $paypalForm->createView(),
+));
+
+``` 
+
+In the view: 
+
+``` twig
+
+<form action="{{ path('ilis_payment_paypal_buynow') }}" method="POST" {{ form_enctype(paypalForm) }}"
+{{ form_widget(paypalForm) }}
+<input type="image" src="https://www.paypalobjects.com/es_ES/i/btn/btn_buynow_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
+<img alt="" border="0" src="https://www.paypalobjects.com/es_ES/i/scr/pixel.gif" width="1" height="1">
+</form>
+
+``` 
 
 ### Transaction identifier
 
