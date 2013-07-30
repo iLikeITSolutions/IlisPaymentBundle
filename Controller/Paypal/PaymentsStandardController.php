@@ -59,7 +59,7 @@ class PaymentsStandardController extends Controller
         $identifier = $data['custom'];
         $transactions = $this->getDoctrine()->getManager()->getRepository('IlisPaymentBundle:Transaction');
 
-        $transaction = $transactions->getOneByIdentifier($identifier);
+        $transaction = $transactions->findOneByIdentifier($identifier);
 
         if (!$transaction instanceof PaypalTransaction)
             throw new Exception('The transaction cannot be found');
