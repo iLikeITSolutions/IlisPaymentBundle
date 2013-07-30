@@ -106,7 +106,7 @@ class Paypal extends Transaction
     /**
      * @var string
      *
-     * @ORM\Column(name="raw_data" type="text", nullable=true)
+     * @ORM\Column(name="raw_data", type="text", nullable=true)
      */
     private $rawData;
 
