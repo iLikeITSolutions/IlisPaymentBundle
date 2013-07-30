@@ -12,6 +12,7 @@ namespace Ilis\Bundle\PaymentBundle\DependencyInjection;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 use Ilis\Bundle\PaymentBundle\Provider\Redsys\Webservice\Client;
+use Ilis\Bundle\PaymentBundle\Provider\Paypal\PaymentsStandard\Button\BuyNow as PaypalButton;
 
 class Configuration implements ConfigurationInterface
 {
@@ -66,8 +67,13 @@ class Configuration implements ConfigurationInterface
                             ->booleanNode('sandbox')
                                 ->defaultValue(false)
                             ->end()
-                            ->scalarNode('rm')
-                                ->defaultValue('0')
+                            ->enumNode('rm')
+                                ->defaultValue(PaypalButton::RETURN_METHOD_GET)
+                                ->values(array(
+                                    PaypalButton::RETURN_METHOD_GET,
+                                    PaypalButton::RETURN_METHOD_GET_NO_VARS,
+                                    PaypalButton::RETURN_METHOD_POST,
+                                ))
                             ->end()
                             ->scalarNode('return')
                                 ->isRequired()

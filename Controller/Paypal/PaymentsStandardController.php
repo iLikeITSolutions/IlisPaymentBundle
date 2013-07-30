@@ -72,7 +72,6 @@ class PaymentsStandardController extends Controller
         $transaction->setPaymentStatus($data['payment_status']);
         $transaction->setRawData(serialize($data));
 
-        // TODO: Fill Transaction Data
         $manager->processTransaction($transaction);
 
         /** @var $logger \Monolog\Logger */

@@ -14,6 +14,10 @@ use Symfony\Component\Validator\Constraints as Assert;
 class BuyNow extends ButtonAbstract
 {
 
+    const RETURN_METHOD_GET         = '0';
+    const RETURN_METHOD_GET_NO_VARS = '1';
+    const RETURN_METHOD_POST        = '2';
+
     /**
      * @var string
      *
