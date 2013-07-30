@@ -57,7 +57,7 @@ class PaymentsStandardController extends Controller
             throw new Exception('The transaction identifier has not been sent');
 
         $identifier = $data['custom'];
-        $transactions = $this->em->getRerpository('IlisPaymentBundle:Transaction');
+        $transactions = $this->getDoctrine()->getEntityManager()->getRerpository('IlisPaymentBundle:Transaction');
 
         $transaction = $transactions->getOneByIdentifier($identifier);
 
