@@ -16,6 +16,7 @@ use Ilis\Bundle\PaymentBundle\Form\Type\Paypal\BuyNowType;
 use Ilis\Bundle\PaymentBundle\Provider\Paypal\PaymentsStandard\Button\Buynow;
 use Ilis\Bundle\PaymentBundle\Exception\Exception;
 use Ilis\Bundle\PaymentBundle\Service\Manager;
+use Ilis\Bundle\PaymentBundle\Entity\Transaction\Paypal as PaypalTransaction;
 
 class PaymentsStandardController extends Controller
 {
@@ -50,10 +51,30 @@ class PaymentsStandardController extends Controller
      */
     public function callbackHandlerAction()
     {
+        $data = $this->getRequest()->request->all();
+
+        if (!array_key_exists('custom', $data))
+            throw new Exception('The transaction identifier has not been sent');
+
+        $identifier = $data['custom'];
+        $transactions = $this->em->getRerpository('IlisPaymentBundle:Transaction');
+
+        $transaction = $transactions->getOneByIdentifier($identifier);
+
+        if (!$transaction instanceof PaypalTransaction)
+            throw new Exception('The transaction cannot be found');
+
+        /** @var $manager \Ilis\Bundle\PaymentBundle\Service\Manager */
+        $manager = $this->get('ilis.payment.manager');
+
+        // TODO: Fill Transaction Data
+        $manager->processTransaction($transaction);
+
+        /** @var $logger \Monolog\Logger */
         $logger = $this->get('logger');
-        $request = $this->getRequest();
         $logger->debug(var_export($request->request->all(), true));
-        return new Response ('Callback Handler');
+
+        return new Response('');
     }
 
 }
