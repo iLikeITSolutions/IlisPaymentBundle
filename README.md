@@ -136,6 +136,17 @@ Where
 * *sandbox* Set this to true if you are testing
 
 
+You will finally need to load the route in your application (you can prefix with whatever makes sense for you)
+
+``` yml
+
+ilis_payment:
+    resource: "@IlisPaymentBundle/Resources/config/routing.yml"
+    prefix:   /ilis-payment
+
+```
+
+
 ## Usage
 
 The main service you will use is the [Ilis\Bundle\PaymentBundle\Service\Manager](Service/Manager.php) that provides you with the methods to:
